@@ -8,7 +8,9 @@ import SingleTicket from './SingleTicket';
 const styles = {
   App: {
     // background: 'linear-gradient(58deg,#1df4ef,#0be89b)',
-    background: '#EEE',
+    // background: '#EEE',
+
+    background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
     position: 'fixed',
     width: '100%',
     height: '100%',
