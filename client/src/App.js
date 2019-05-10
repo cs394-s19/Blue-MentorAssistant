@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { withStyles, } from '@material-ui/core';
 import SingleTicket from './SingleTicket';
