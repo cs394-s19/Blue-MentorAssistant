@@ -26,7 +26,11 @@ const classes = {
     marginTop: '5px',
   },
   allSuggestions: {
-    border: '2px solid red',
+
+  },
+  typographyDiv: {
+    border: '1px solid red',
+    width: '100%',
   },
 };
 const Suggestions = ({classes}) => {
@@ -34,22 +38,31 @@ const Suggestions = ({classes}) => {
   return (
 
     <div className={classes.suggestionsDiv}>
-      <Typography variant="h5" className={classes.typography}>
-        Suggestions
-      </Typography>
+      <div className={classes.typographyDiv}>
+        <Typography variant="h5" className={classes.typography}>
+          Suggestions
+        </Typography>
+      </div>
       <div className={classes.allSuggestions}>
         <List>
-                <Paper className={classes.suggestionPaper} elevation = {10}>
+                <Paper className={classes.suggestionPaper} elevation = {2}>
                   <ListItem>
                     <ListItemText
-                      primary="Single-line item"
-                    />
+                      primary="Take a look at the chapter 2 of Common Error."
+                      />
                     </ListItem>
                 </Paper>
-                <Paper className={classes.suggestionPaper} elevation = {10}>
+                <Paper className={classes.suggestionPaper} elevation = {2}>
                     <ListItem>
                       <ListItemText
-                        primary="Single-line item"
+                        primary='Try to search with keywords "racket syntax for overlay/xy".'
+                      />
+                      </ListItem>
+                </Paper>
+                <Paper className={classes.suggestionPaper} elevation = {2}>
+                    <ListItem>
+                      <ListItemText
+                        primary="Take a look at Racket Syntax Documentation."
                       />
                       </ListItem>
                 </Paper>
