@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select'
+import Paper from '@material-ui/core/Paper';
 
 const classes = {
   titleDiv: {
@@ -38,9 +39,23 @@ const classes = {
   },
   formControl: {
     display: 'flex',
-    marginTop: '20px',
+    marginTop: '4px',
     width: '48%',
     marginLeft: '4px',
+  },
+  subPaper: {
+    padding: '10px',
+    marginTop: '10px',
+    marginBottom: '10px',
+
+  },
+  infoDiv: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  codeDiv: {
+    marginTop: '10px',
   },
 };
 
@@ -49,106 +64,113 @@ const classes = {
 const Info = ({classes}) => {
 
   return (
-    <div>
-    <div className={classes.titleDiv}>
+    <div className={classes.infoDiv}>
+    <Paper className={classes.subPaper}>
+      <div className={classes.titleDiv}>
+      <TextField
+
+            id="filled-name"
+            label="Title"
+            className={classes.titleField}
+            placeholder="Placeholder"
+            value=" I’m getting an error when I try to use function overlay/xy"
+            margin="normal"
+            variant="outlined"
+          />
+      </div>
+
+      <div className={classes.titleDiv}>
+       <FormControl className={classes.formControl}>
+           <InputLabel>Status</InputLabel>
+            <Select
+                    value={0}
+
+                    input={<Input name="age" id="age-label-placeholder" />}
+                  >
+                    <MenuItem value={0}>Open</MenuItem>
+                    <MenuItem value={1}>Completed</MenuItem>
+            </Select>
+        </FormControl>
+
+             <FormControl className={classes.formControl}>
+             <TextField
+               id="date"
+               label="Date Submitted"
+               type="date"
+               defaultValue="2019-05-10"
+               className={classes.textField}
+               InputLabelProps={{
+                 shrink: true,
+               }}
+             />
+                </FormControl>
+
+      </div>
+      <div className={classes.titleDiv}>
+          <TextField
+               id="outlined-name"
+               label="NetID"
+               className={classes.statusField}
+               value="vka5277"
+               margin="normal"
+               variant="outlined"
+             />
+
+             <TextField
+                  id="outlined-name"
+                  label="Name"
+                  className={classes.statusField}
+                  value="Victor Aung"
+
+                  margin="normal"
+                  variant="outlined"
+                />
+      </div>
+      <div className={classes.titleDiv}>
+      <TextField
+            id="outlined-full-width"
+            label="Email"
+            className={classes.titleField}
+
+            value="VictorAung2021@u.northwestern.edu"
+
+            margin="normal"
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+      </div>
 
 
-    <TextField
 
-          id="filled-name"
-          label="Title"
-          className={classes.titleField}
-          placeholder="Placeholder"
-          value=" I’m getting an error when I try to use function overlay/xy"
-          margin="normal"
-          variant="outlined"
-
-        />
+      <div className={classes.titleDiv}>
+      <TextField
+            id="outlined-multiline-static"
+            label="Code"
+            multiline
+            rows="8"
+            defaultValue=""
+            value="(overlay/xy main-flag 90 90 beside my-star beside my-star beside my-star)"
+            className={classes.codeField}
+            variant="outlined"
+          />
+      </div>
+      <div className={classes.titleDiv}>
+      <TextField
+            id="outlined-multiline-static"
+            label="Output"
+            multiline
+            rows="8"
+            defaultValue=""
+            value="overlay/xy: expects only 4 arguments, but found 11."
+            className={classes.codeField}
+            variant="outlined"
+          />
     </div>
 
-    <div className={classes.titleDiv}>
-     <FormControl className={classes.formControl}>
-         <InputLabel>Status</InputLabel>
-          <Select
-                  value={0}
+    </Paper>
 
-                  input={<Input name="age" id="age-label-placeholder" />}
-                >
-                  <MenuItem value={0}>Open</MenuItem>
-                  <MenuItem value={1}>Completed</MenuItem>
-          </Select>
-      </FormControl>
-
-
-           <TextField
-                id="outlined-name"
-                label="Date Submitted"
-                className={classes.statusField}
-                value="5/10/2019"
-
-                margin="normal"
-                variant="outlined"
-              />
-    </div>
-    <div className={classes.titleDiv}>
-        <TextField
-             id="outlined-name"
-             label="NetID"
-             className={classes.statusField}
-             value="vka5277"
-             margin="normal"
-             variant="outlined"
-           />
-
-           <TextField
-                id="outlined-name"
-                label="Name"
-                className={classes.statusField}
-                value="Victor Aung"
-
-                margin="normal"
-                variant="outlined"
-              />
-    </div>
-    <div className={classes.titleDiv}>
-    <TextField
-          id="outlined-full-width"
-          label="Email"
-          className={classes.titleField}
-
-          value="VictorAung2021@u.northwestern.edu"
-
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-    </div>
-    <div className={classes.titleDiv}>
-    <TextField
-          id="outlined-multiline-static"
-          label="Code"
-          multiline
-          rows="10"
-          defaultValue=""
-          value="(overlay/xy main-flag 90 90 beside my-star beside my-star beside my-star)"
-          className={classes.codeField}
-          variant="outlined"
-        />
-    </div>
-    <div className={classes.titleDiv}>
-    <TextField
-          id="outlined-multiline-static"
-          label="Output"
-          multiline
-          rows="10"
-          defaultValue=""
-          value="overlay/xy: expects only 4 arguments, but found 11."
-          className={classes.codeField}
-          variant="outlined"
-        />
-    </div>
     </div>
 
   )

@@ -25,6 +25,8 @@ const classes = {
     marginRight: 'auto',
     marginTop: "30px",
     marginBottom: "30px",
+    paddingBottom: "20px",
+    backgroundColor: "#e5e5e5",
   },
   root: {
      flexGrow: 1,

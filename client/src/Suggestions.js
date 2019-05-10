@@ -29,8 +29,11 @@ const classes = {
 
   },
   typographyDiv: {
-    border: '1px solid red',
     width: '100%',
+  },
+  subPaper: {
+    padding: '10px',
+
   },
 };
 const Suggestions = ({classes}) => {
@@ -38,7 +41,7 @@ const Suggestions = ({classes}) => {
   return (
 
     <div className={classes.suggestionsDiv}>
-    
+      <Paper className={classes.subPaper}>
       <div className={classes.typographyDiv}>
         <Typography variant="h5" className={classes.typography}>
           Suggestions
@@ -69,6 +72,7 @@ const Suggestions = ({classes}) => {
                 </Paper>
         </List>
       </div>
+      </Paper>
     </div>
   )
 };
