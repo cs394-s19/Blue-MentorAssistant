@@ -38,6 +38,7 @@ const Suggestions = ({classes}) => {
   return (
 
     <div className={classes.suggestionsDiv}>
+    
       <div className={classes.typographyDiv}>
         <Typography variant="h5" className={classes.typography}>
           Suggestions
