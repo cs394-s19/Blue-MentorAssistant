@@ -8,25 +8,31 @@ import Suggestions from './Suggestions';
 
 //css need to be in camel case format
 const classes = {
-  paper: {
-
-    width: '90%',
-    leftMargin: 'auto',
-    rightMargin: 'auto',
-    textAlign: 'center',
+  App: {
+    border: '2px solid red',
 
   },
+  paper: {
+    overflowY: 'scroll',
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+
+
 
 };
 
 const SingleTicket = ( {classes} ) => {
 
   return (
-    <div>
-        <Paper className = {classes.paper}>
-          <Info classes = {classes} />
-          <Suggestions classes = {classes} />
-        </Paper>
+    <div className = {classes.App}>
+
+          <Paper className = {classes.paper} elevation = {6}>
+            <Info classes = {classes} />
+            <Suggestions classes = {classes} />
+          </Paper>
+
     </div>
   );
 };

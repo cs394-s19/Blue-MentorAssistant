@@ -6,31 +6,55 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 
 const classes = {
   root: {
     backgroundColor: "white",
   },
 
+  typography: {
+
+  },
+  suggestionsDiv: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '10px',
+  },
+  suggestionPaper: {
+    marginTop: '5px',
+  },
+  allSuggestions: {
+    border: '2px solid red',
+  },
 };
 const Suggestions = ({classes}) => {
 
   return (
+
     <div className={classes.suggestionsDiv}>
-      <List>
-              
-                <ListItem>
-                  <ListItemText
-                    primary="Single-line item"
-                  />
-                  </ListItem>
+      <Typography variant="h5" className={classes.typography}>
+        Suggestions
+      </Typography>
+      <div className={classes.allSuggestions}>
+        <List>
+                <Paper className={classes.suggestionPaper} elevation = {10}>
                   <ListItem>
                     <ListItemText
                       primary="Single-line item"
                     />
                     </ListItem>
-
-      </List>
+                </Paper>
+                <Paper className={classes.suggestionPaper} elevation = {10}>
+                    <ListItem>
+                      <ListItemText
+                        primary="Single-line item"
+                      />
+                      </ListItem>
+                </Paper>
+        </List>
+      </div>
     </div>
   )
 };
