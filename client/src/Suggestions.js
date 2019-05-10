@@ -29,7 +29,6 @@ const classes = {
 
   },
   typographyDiv: {
-    border: '1px solid red',
     width: '100%',
   },
 };
@@ -38,7 +37,7 @@ const Suggestions = ({classes}) => {
   return (
 
     <div className={classes.suggestionsDiv}>
-    
+
       <div className={classes.typographyDiv}>
         <Typography variant="h5" className={classes.typography}>
           Suggestions

@@ -21,9 +21,20 @@ const classes = {
     marginRight: 'Auto',
 
   },
+
+  statusDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+
+    marginLeft: 'Auto',
+    marginRight: 'Auto',
+  },
   titleField: {
     display: 'flex',
     width: '100%',
+
     // backgroundColor: '#FFFFFF',
   },
   codeField: {
@@ -38,9 +49,9 @@ const classes = {
   },
   formControl: {
     display: 'flex',
-    marginTop: '20px',
+    marginTop: '6px',
     width: '48%',
-    marginLeft: '4px',
+
   },
 };
 
@@ -54,7 +65,6 @@ const Info = ({classes}) => {
 
 
     <TextField
-
           id="filled-name"
           label="Title"
           className={classes.titleField}
@@ -66,30 +76,41 @@ const Info = ({classes}) => {
         />
     </div>
 
-    <div className={classes.titleDiv}>
-     <FormControl className={classes.formControl}>
-         <InputLabel>Status</InputLabel>
+    <div className={classes.statusDiv}>
+     <FormControl className={classes.formControl} variant="outlined">
+         <InputLabel>
+         Status
+         </InputLabel>
           <Select
                   value={0}
 
-                  input={<Input name="age" id="age-label-placeholder" />}
+                  input={<OutlinedInput
+                    name="age"
+                    id="age-label-placeholder"
+                    labelWidth= {44}
+                     />}
                 >
                   <MenuItem value={0}>Open</MenuItem>
                   <MenuItem value={1}>Completed</MenuItem>
           </Select>
       </FormControl>
 
-
+           <FormControl className={classes.formControl}>
            <TextField
-                id="outlined-name"
-                label="Date Submitted"
-                className={classes.statusField}
-                value="5/10/2019"
+             id="date"
+             label="Date Submitted"
+             type="date"
+             defaultValue="2019-05-10"
+             className={classes.textField}
+             InputLabelProps={{
+               shrink: true,
+             }}
+              variant="outlined"
+           />
+              </FormControl>
 
-                margin="normal"
-                variant="outlined"
-              />
     </div>
+
     <div className={classes.titleDiv}>
         <TextField
              id="outlined-name"

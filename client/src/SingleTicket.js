@@ -20,7 +20,7 @@ const classes = {
 
   },
   paper: {
-    width: '90%',
+    width: '74%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: "30px",
