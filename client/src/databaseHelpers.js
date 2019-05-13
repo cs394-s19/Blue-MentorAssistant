@@ -1,11 +1,19 @@
 import { firebase } from './firebaseConfig';
 
-
 const getTicket = (ticket) => {
   console.log(ticket);
   const database = firebase.database();
   const ticketRef = database.ref(ticket);
   ticketRef.once('value', (snapshot) => {
+    console.log(snapshot.val());
+    return snapshot.val();
+  });
+}
+
+const getAllTickets = () => {
+  const database = firebase.database();
+  const dbref = database.ref('/');
+  dbref.once('value', (snapshot) => {
     console.log(snapshot.val());
     return snapshot.val();
   });
@@ -63,4 +71,4 @@ const getTextBlocks = (ticket) => {
 
 
 
-export { getTicket, getCategory, getMessage, getResponse, getNetID, getName, getTextBlocks };
+export { getTicket, getAllTickets, getCategory, getMessage, getResponse, getNetID, getName, getTextBlocks };

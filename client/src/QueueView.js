@@ -8,13 +8,12 @@ import { makeStyles } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-//import ListSubheader from '@material-ui/core/ListSubheader';
 import HelpOutline from '@material-ui/icons/HelpOutline';
-//import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import {getAllTickets} from './databaseHelpers';
 
 const styles = makeStyles({
   App: {
-   
+    fontFamily: 'Roboto',
   },
   appbar: {
 
@@ -64,7 +63,7 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = ["Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?"];
-  
+  getAllTickets();
   const [tickets, updateTickets] = useState(debugger_tickets);
 
   return(  
