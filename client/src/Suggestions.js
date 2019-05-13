@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -30,7 +30,22 @@ const classes = {
     width: '100%',
   },
 };
-const Suggestions = ({classes}) => {
+const Suggestions = ({classes, ticket}) => {
+
+  const [sug0, setSug0] = useState("...")
+  const [sug1, setSug1] = useState("...")
+
+  // TODO: Map the suggestions properly instead of naïvely assuming that there will be only two
+
+  const getSuggestions = () =>
+  {
+    setSug0(ticket['response']['0']);
+    setSug1(ticket['response']['1']);
+  }
+  useEffect(() =>
+  {
+    getSuggestions();
+  },[ticket]);
 
   return (
 
@@ -46,21 +61,14 @@ const Suggestions = ({classes}) => {
                 <Paper className={classes.suggestionPaper} elevation = {2}>
                   <ListItem>
                     <ListItemText
-                      primary="Take a look at the chapter 2 of Common Error."
+                      primary={sug0}
                       />
                     </ListItem>
                 </Paper>
                 <Paper className={classes.suggestionPaper} elevation = {2}>
                     <ListItem>
                       <ListItemText
-                        primary='Try to search with keywords "racket syntax for overlay/xy".'
-                      />
-                      </ListItem>
-                </Paper>
-                <Paper className={classes.suggestionPaper} elevation = {2}>
-                    <ListItem>
-                      <ListItemText
-                        primary="Take a look at Racket Syntax Documentation."
+                        primary={sug1}
                       />
                       </ListItem>
                 </Paper>

@@ -51,13 +51,13 @@ const classes = {
 
 
 
-const Info = ({classes}) => {
+const Info = ({classes, ticket}) => {
 
   return (
     <div>
-        <TicketHeader classes = {classes} />
-        <StudentInfo classes = {classes} />
-        <TicketInfo classes = {classes} />
+        <TicketHeader classes = {classes} ticket= {ticket} />
+        <StudentInfo classes = {classes} ticket={ticket} />
+        <TicketInfo classes = {classes} ticket={ticket}/>
     </div>
 
   )

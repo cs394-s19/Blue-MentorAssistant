@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+
+import { firebase } from '../firebaseConfig';
 
 const classes = {
 
@@ -8,7 +10,24 @@ const classes = {
 
 
 
-const TicketInfo = ({classes}) => {
+const TicketInfo = ({classes, ticket}) => {
+  const [code, setCode] = useState("...");
+  const [output, setOutput] = useState("...")
+
+
+  const getTicketInfo = () =>
+  {
+
+
+    console.log(ticket);
+    
+    setCode(ticket['textBlocks']['0']['text']);
+    setOutput(ticket['textBlocks']['1']['text']);
+
+  }
+  useEffect(() => {
+    getTicketInfo();
+  },[ticket]);
   return (
     <div>
       <div className={classes.titleDiv}>
@@ -18,7 +37,7 @@ const TicketInfo = ({classes}) => {
             multiline
             rows="10"
             defaultValue=""
-            value="(overlay/xy main-flag 90 90 beside my-star beside my-star beside my-star)"
+            value={code}
             className={classes.codeField}
             variant="outlined"
           />
@@ -30,7 +49,7 @@ const TicketInfo = ({classes}) => {
             multiline
             rows="10"
             defaultValue=""
-            value="overlay/xy: expects only 4 arguments, but found 11."
+            value={output}
             className={classes.codeField}
             variant="outlined"
           />
