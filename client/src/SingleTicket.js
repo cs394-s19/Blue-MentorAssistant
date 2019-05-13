@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Info from './Info';
 import Suggestions from './Suggestions';
+import {getTicket} from './databaseHelpers';
 
 
 

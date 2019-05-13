@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { withStyles, } from '@material-ui/core';
 import SingleTicket from './SingleTicket';
+// import { firebase } from './firebaseConfig';
 // import { makeStyles } from '@material-ui/styles';
 
 const styles = {
