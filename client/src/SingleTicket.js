@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import { withStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import Info from './Info';
 import Suggestions from './Suggestions';
 import {getTicket} from './databaseHelpers';
 
-
-
-//css need to be in camel case format
 const classes = {
   App: {
     overflowY: 'scroll',
@@ -23,29 +21,47 @@ const classes = {
   },
   root: {
      flexGrow: 1,
-   },
-   grow: {
+  },
+  grow: {
      flexGrow: 1,
-   },
+  },
   menuButton: {
   marginLeft: -12,
   marginRight: 20,
-},
+  },
+  AppWrapper: {
+    // background: 'linear-gradient(58deg,#1df4ef,#0be89b)',
+    // background: '#EEE',
 
+    background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
+    position: 'fixed',
+    width: '100%',
+    height: '100%',
+    top: '0px',
+    left: '0px',
 
-
+  },
+  textField: {
+    border: '1px solid red',
+    width: '500px',
+    marginLeft: '400px',
+  },
 };
 
-const SingleTicket = ( {classes} ) => {
+const classesMS = makeStyles(classes);
 
+const SingleTicket = () => {
+  const CSS_classes = classesMS();
   return (
-    <div className = {classes.App}>
-          <Paper className = {classes.paper} elevation = {6}>
-            <Info classes = {classes} />
-            <Suggestions classes = {classes} />
-          </Paper>
+    <div className={CSS_classes.AppWrapper}>
+      <div className = {CSS_classes.App}>
+            <Paper className = {CSS_classes.paper} elevation = {6}>
+              <Info classes = {classes} />
+              <Suggestions classes = {classes} />
+            </Paper>
+      </div>
     </div>
   );
 };
 
-export default withStyles(classes)(SingleTicket);
+export default SingleTicket;
