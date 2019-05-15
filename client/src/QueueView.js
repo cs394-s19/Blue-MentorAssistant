@@ -9,11 +9,19 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import HelpOutline from '@material-ui/icons/HelpOutline';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
 import {getAllTickets} from './databaseHelpers';
 
 const styles = makeStyles({
-  App: {
+  wrapper: {
+    background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
+  },
+  app: {
     fontFamily: 'Roboto',
+  },
+  appbarwrapper: {
+    width: '60%',
   },
   appbar: {
 
@@ -32,12 +40,20 @@ const styles = makeStyles({
 
 const QueueHeader = ({styles}) => {
   const stylesheet = styles();
+  const handleBackBtn = () => {
+    window.history.back();
+  }
   return(
-    <AppBar className={stylesheet.appbar} position="sticky" color="default">
-      <Toolbar className={stylesheet.toolbar}>
-        <h1>Mentor's Assistant - Queue</h1>
-      </Toolbar>
-    </AppBar>
+    <div className={stylesheet.appbarwrapper}>
+      <AppBar className={stylesheet.appbar} position="sticky" color="primary">
+        <Toolbar className={stylesheet.toolbar}>
+          <IconButton onClick={handleBackBtn} className={stylesheet.backButton} color="inherit" aria-label="back">
+            <ArrowBack />
+          </IconButton>
+          <h3>Mentor's Assistant | Queue</h3>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
@@ -63,15 +79,17 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = ["Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?"];
-  getAllTickets();
+  //getAllTickets();
   const [tickets, updateTickets] = useState(debugger_tickets);
 
   return(  
-  <div className={stylesheet.App}>  
-    <QueueHeader styles={styles} />
-    <center>
-      <Queue styles={styles} tickets={tickets} />
-    </center>
+  <div className={stylesheet.wrapper}>
+    <div className={stylesheet.app}>  
+      <center>
+        <QueueHeader styles={styles} />
+        <Queue styles={styles} tickets={tickets} />
+      </center>
+    </div>
   </div>
   );
 }
