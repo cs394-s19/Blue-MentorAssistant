@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import Info from './Info';
 import Suggestions from './Suggestions';
 import {getTicket} from './databaseHelpers';
+
+import { firebase } from './firebaseConfig';
 
 const classes = {
   App: {
@@ -48,16 +50,49 @@ const classes = {
   },
 };
 
+const dummyTicket = {
+  category: "...",
+  date: "...",
+  message: "...",
+  response: {0: "...",
+             1: "..."},
+  student: {id: "0",
+            name: "..."},
+  textBlocks: {0: {label: "...",
+                   text: "...",
+                   type: "..."},
+               1: {label: "...",
+                   text: "...",
+                   type: "..."}}
+};
+
+
+
 const classesMS = makeStyles(classes);
 
-const SingleTicket = () => {
+const SingleTicket = ({match}) => {
+  const [ticket, setTicket] = useState(dummyTicket)
+  const getTicket = () =>
+  {
+    const database = firebase.database();
+    const ticketRef = database.ref(match.params.id);
+     ticketRef.once('value').then((snapshot) => {
+      setTicket(snapshot.val());
+    });
+  }
+
+  useEffect(() => 
+  {
+    getTicket();
+  }, []);
+
   const CSS_classes = classesMS();
   return (
     <div className={CSS_classes.AppWrapper}>
       <div className = {CSS_classes.App}>
             <Paper className = {CSS_classes.paper} elevation = {6}>
-              <Info classes = {classes} />
-              <Suggestions classes = {classes} />
+              <Info classes = {classes} ticket = {ticket} />
+              <Suggestions classes = {classes} ticket = {ticket} />
             </Paper>
       </div>
     </div>

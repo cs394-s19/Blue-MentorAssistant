@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -15,12 +15,29 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
+import { firebase } from '../firebaseConfig';
+
 const classes = {
 };
 
 
 
-const TicketHeader = ({classes}) => {
+const TicketHeader = ({classes, ticket}) => {
+  const [title, setTitle] = useState("...");
+  const [submitDate, setSubmitDate] = useState("...")
+
+  const GetTicketHeader = () =>
+  {
+    setTitle(ticket['message']);
+    setSubmitDate(ticket['date']);
+  }
+
+  
+  useEffect(() => 
+  {
+    console.log(ticket['message']);
+    GetTicketHeader();
+  },[ticket]);
   return (
     <div>
       <AppBar position="static">
@@ -29,7 +46,7 @@ const TicketHeader = ({classes}) => {
                <ArrowBack />
              </IconButton>
              <Typography variant="h6" color="inherit" className={classes.grow}>
-                Ticket 103201
+              Ticket
              </Typography>
              <Button color="inherit">Save</Button>
            </Toolbar>
@@ -42,7 +59,7 @@ const TicketHeader = ({classes}) => {
             label="Title"
             className={classes.titleField}
             placeholder="Placeholder"
-            value=" I’m getting an error when I try to use function overlay/xy"
+            value={title}
             margin="normal"
             variant="outlined"
 
@@ -73,7 +90,7 @@ const TicketHeader = ({classes}) => {
                id="date"
                label="Date Submitted"
                type="date"
-               defaultValue="2019-05-10"
+               defaultValue={submitDate}
                className={classes.textField}
                InputLabelProps={{
                  shrink: true,
