@@ -21,7 +21,7 @@ const StudentInfo = ({classes, ticket}) => {
     setNetID(ticket['student']['id']);
     setEmail(ticket['student']['email'])
   }
-  useEffect(() => 
+  useEffect(() =>
   {
     getStudentInfo();
   }, [ticket]);

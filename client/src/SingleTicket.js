@@ -81,7 +81,7 @@ const SingleTicket = ({match}) => {
     });
   }
 
-  useEffect(() => 
+  useEffect(() =>
   {
     getTicket();
   }, []);
