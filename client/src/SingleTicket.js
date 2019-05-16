@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
-import Info from './Info';
-import Suggestions from './Suggestions';
+import Info from './SingleTicketComponents/Info';
+import Suggestions from './SingleTicketComponents/Suggestions';
+import Footer from './SingleTicketComponents/Footer';
 import {getTicket} from './databaseHelpers';
 
 import { firebase } from './firebaseConfig';
@@ -12,6 +13,7 @@ const classes = {
   App: {
     overflowY: 'scroll',
     height: '100vh',
+
 
   },
   paper: {
@@ -93,6 +95,7 @@ const SingleTicket = ({match}) => {
             <Paper className = {CSS_classes.paper} elevation = {6}>
               <Info classes = {classes} ticket = {ticket} />
               <Suggestions classes = {classes} ticket = {ticket} />
+              <Footer classes = {classes} ticket = {ticket} />
             </Paper>
       </div>
     </div>

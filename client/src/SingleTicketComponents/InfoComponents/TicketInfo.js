@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-import { firebase } from '../firebaseConfig';
+import { firebase } from '../../firebaseConfig';
 
 const classes = {
 
@@ -20,7 +20,7 @@ const TicketInfo = ({classes, ticket}) => {
 
 
     console.log(ticket);
-    
+
     setCode(ticket['textBlocks']['0']['text']);
     setOutput(ticket['textBlocks']['1']['text']);
 

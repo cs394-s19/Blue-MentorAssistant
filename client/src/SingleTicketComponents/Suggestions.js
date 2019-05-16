@@ -45,12 +45,7 @@ const classes = {
 };
 
 const Suggestions = ({classes, ticket}) => {
-  const [isModalOpen, toggleModal] = useState(false)
 
-  const handleModal = () => {
-    toggleModal(!isModalOpen);
-    console.log(isModalOpen);
-  };
 
   const [sug0, setSug0] = useState("...")
   const [sug1, setSug1] = useState("...")
@@ -95,27 +90,7 @@ const Suggestions = ({classes, ticket}) => {
         </List>
       </div>
 
-        <div>
-
-        <Button onClick={handleModal}>Send Email</Button>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open= {isModalOpen}
-          onClose={handleModal}
-        >
-          <Paper className={classes.emailForm}>
-
-            <Typography variant="h6" id="modal-title">
-              Text in a modal
-            </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-
-          </Paper>
-        </Modal>
-      </div>
+      
 
 
     </div>

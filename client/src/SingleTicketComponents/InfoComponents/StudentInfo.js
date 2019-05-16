@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import * as database from '../databaseHelpers';
-import { firebase } from '../firebaseConfig';
+import * as database from '../../databaseHelpers';
+import { firebase } from '../../firebaseConfig';
 
 const classes = {
 };
