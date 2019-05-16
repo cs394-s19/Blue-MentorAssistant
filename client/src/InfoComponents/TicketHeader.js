@@ -18,6 +18,9 @@ import Button from '@material-ui/core/Button';
 import { firebase } from '../firebaseConfig';
 
 const classes = {
+  grow: {
+    flexGrow: 1,
+  },
 };
 
 
@@ -32,8 +35,8 @@ const TicketHeader = ({classes, ticket}) => {
     setSubmitDate(ticket['date']);
   }
 
-  
-  useEffect(() => 
+
+  useEffect(() =>
   {
     console.log(ticket['message']);
     GetTicketHeader();
