@@ -46,8 +46,39 @@ const classes = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '200px',
-    height: '200px',
+    width: '1200px',
+    height: '750px',
+
+
+  },
+
+  emailDiv: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '2%',
+    border: '2px solid red',
+
+  },
+
+  toField: {
+    position: 'relative',
+    width: '100%',
+        marginTop: '10px',
+
+  },
+
+  subjectField: {
+    position: 'relative',
+    marginTop: '10px',
+    width: '100%',
+
+  },
+
+  bodyField: {
+    position: 'relative',
+    marginTop: '10px',
+    width: '100%',
 
   },
 
@@ -84,20 +115,51 @@ const Footer = ({classes, ticket}) => {
     >
       <Paper className={classes.emailForm}>
 
-        <Typography variant="h6" id="modal-title">
-          Text in a modal
+
+        <div className={classes.emailDiv}>
+
+        <Typography variant="h5" className={classes.typography}>
+          Send Email:
         </Typography>
-        <div className={classes.titleDiv}>
-        <TextField
-              id="outlined-multiline-static"
-              label="Code"
-              multiline
-              rows="10"
-              defaultValue=""
-              value="test"
-              className={classes.codeField}
-              variant="outlined"
-            />
+
+          <TextField
+                disabled
+                id="outlined-multiline-static"
+                label="To:"
+                multiline
+                rows="1"
+                defaultValue=""
+                value="VictorAung2021@u.northwestern.edu"
+                className={classes.toField}
+                variant="outlined"
+              />
+
+          <TextField
+                id="outlined-multiline-static"
+                label="Subject:"
+                multiline
+                rows="1"
+                defaultValue=""
+                value="test"
+                className={classes.subjectField}
+                variant="outlined"
+              />
+
+              <TextField
+                    id="outlined-multiline-static"
+                    label="Body:"
+                    multiline
+                    rows="16"
+                    defaultValue=""
+                    value="test"
+                    className={classes.bodyField}
+                    variant="outlined"
+                  />
+
+                  <Typography variant="h5" className={classes.typography}>
+                    Suggestions
+                  </Typography>
+
         </div>
 
 
