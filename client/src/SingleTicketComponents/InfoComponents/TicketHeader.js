@@ -27,12 +27,14 @@ const classes = {
 
 const TicketHeader = ({classes, ticket}) => {
   const [title, setTitle] = useState("...");
+  const [exercise, setExercise] = useState("...");
   const [submitDate, setSubmitDate] = useState("...")
 
   const GetTicketHeader = () =>
   {
     setTitle(ticket['message']);
     setSubmitDate(ticket['date']);
+    setExercise(ticket['exercise']);
   }
 
 
@@ -54,6 +56,22 @@ const TicketHeader = ({classes, ticket}) => {
              <Button color="inherit">Save</Button>
            </Toolbar>
          </AppBar>
+         
+         <div className={classes.titleDiv}>
+
+
+      <TextField
+            id="filled-exercise"
+            label="Exercise"
+            className={classes.titleField}
+            placeholder="Exercise"
+            value={exercise}
+            margin="normal"
+            variant="outlined"
+
+          />
+      </div>
+
       <div className={classes.titleDiv}>
 
 
@@ -94,6 +112,7 @@ const TicketHeader = ({classes, ticket}) => {
                label="Date Submitted"
                type="date"
                defaultValue={submitDate}
+               value={submitDate}
                className={classes.textField}
                InputLabelProps={{
                  shrink: true,

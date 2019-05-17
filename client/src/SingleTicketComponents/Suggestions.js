@@ -7,8 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-
-
+import ReactHtmlParser from 'react-html-parser';
 
 const classes = {
   root: {
@@ -54,8 +53,8 @@ const Suggestions = ({classes, ticket}) => {
 
   const getSuggestions = () =>
   {
-    setSug0(ticket['response']['0']);
-    setSug1(ticket['response']['1']);
+    setSug0(ReactHtmlParser(ticket['response']['0']));
+    setSug1(ReactHtmlParser(ticket['response']['1']));
   }
   useEffect(() =>
   {
