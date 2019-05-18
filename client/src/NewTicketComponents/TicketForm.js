@@ -16,7 +16,6 @@ const classes = {
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
-
   },
 
   statusDiv: {
@@ -67,7 +66,8 @@ const TicketForm = ({ classes }) => {
     let formSubmit = {
       student: {
         "name": name,
-        "id": netID
+        "id": netID,
+        "email": email
       },
       message: message,
       responses: [],
