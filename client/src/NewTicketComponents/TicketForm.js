@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TextBlocks from './TextBlocks';
 import { withStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -83,15 +80,18 @@ const TicketForm = ({ classes }) => {
       method: 'POST',
       body: JSON.stringify(formSubmit), // string or object
       headers:{
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'https://secure-oasis-87770.herokuapp.com/'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://secure-oasis-87770.herokuapp.com/'
       }
     });
     const myJson = await response.json();
     console.log("myJson ====> ", myJson);
-    
+    let d = new Date();
+    myJson["date"] = d.getTime();
+    let database = firebase.database();
+    database.ref('winter2019/' + exercises[selectedIndex] + '/tickets').push(myJson);
 
-  // }
+
   }
 
   const exercises = [
