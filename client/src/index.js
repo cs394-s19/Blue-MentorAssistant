@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Home from './Home';
 import SingleTicket from './SingleTicket';
 import QueueView from './QueueView';
-import NewTicket from './NewTicket';
+import NewTicket from './NewTicketComponents/NewTicket';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 //ROUTES
