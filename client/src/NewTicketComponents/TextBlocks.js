@@ -142,7 +142,7 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
     setAnchorEl(null);
     setSelected(index);
     setType(inputTypes[index]);
-    updateTextBlock(blockIndex, type, text, label);
+    updateTextBlock(blockIndex, inputTypes[index], text, label);
   }
 
   function handleClose() {
@@ -151,12 +151,12 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
 
   const handleTextChange = (value) => {
     setText(value);
-    updateTextBlock(blockIndex, type, text, label);
+    updateTextBlock(blockIndex, type, value, label);
   }
 
   const handleLabelChange = (value) => {
     setLabel(value);
-    updateTextBlock(blockIndex, type, text, label);
+    updateTextBlock(blockIndex, type, text, value);
   }
 
   const handleDelete = (index) => {

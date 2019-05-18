@@ -66,22 +66,34 @@ const TicketForm = ({ classes }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let formSubmit = {
-      "student": {
+      student: {
         "name": name,
         "id": netID
       },
-      "message": message,
-      "responses": [],
-      "patterns": null,
-      "source": exercises[selectedIndex],
-      "textblocks": textBlocks
+      message: message,
+      responses: [],
+      patterns: null,
+      source: exercises[selectedIndex],
+      textBlocks: textBlocks,
+      category: "Error",
     };
+    const response = await fetch('https://secure-oasis-87770.herokuapp.com/api/form', {
+      method: 'POST',
+      body: JSON.stringify(formSubmit), // string or object
+      headers:{
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://secure-oasis-87770.herokuapp.com/'
+      }
+    });
+    const myJson = await response.json();
+    console.log("myJson ====> ", myJson);
+    
 
-    console.log(formSubmit);
-
+  // }
   }
+
   const exercises = [
     "exercise1",
     "exercise2",
