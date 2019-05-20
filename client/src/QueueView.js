@@ -11,14 +11,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
-import {getAllTickets} from './databaseHelpers';
+import { firebase } from './firebaseConfig';
 
 const styles = makeStyles({
   wrapper: {
     background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
+    height: '1000px',
+    width: '100%',
   },
   app: {
     fontFamily: 'Roboto',
+    height: '100%',
   },
   appbarwrapper: {
     width: '60%',
@@ -34,8 +37,12 @@ const styles = makeStyles({
   },
   ticketinfo: {
     display: 'grid',
-    gridTemplateColumns: '300px 250px 230px 50px',
-  }
+    gridTemplateColumns: '450px 170px 150px 50px',
+  },
+  links: {
+    color: 'black',
+    textDecoration: 'none',
+  },
 });
 
 const QueueHeader = ({styles}) => {
@@ -61,7 +68,7 @@ const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
   const QueueListItems = tickets.map(ticket => 
   <ListItem button>
-    <ListItemText><div className={stylesheet.ticketinfo}><b>{ticket}</b> <p>John Doe</p> <p>02/21/19</p><HelpOutline></HelpOutline></div></ListItemText>
+    <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["ticket"]}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student"]["name"]}</p> <p>{ticket["date"]}</p><HelpOutline></HelpOutline></div></a></ListItemText>
   </ListItem>
   );
   console.log(QueueListItems);
@@ -78,9 +85,58 @@ const Queue = ({tickets, styles}) => {
 const QueueView = () => {
   const stylesheet = styles();
   //debugging
-  const debugger_tickets = ["Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?","Hey!! Help me with HW4 pls", "WIll midterm results by tomorrow even though I took it today", "what is const mean?"];
-  //getAllTickets();
-  const [tickets, updateTickets] = useState(debugger_tickets);
+  const debugger_tickets = [
+    {
+      "ticket": "0",
+      "date": "2017-05-24",
+      "exercise": "HW1: Fingers",
+      "message": "I’m getting an error...",
+      "student": {
+        "id": "bbb0000",
+        "name": "Joseph Doe",
+      },
+      "category": "null",
+    },
+  ];
+  const [tickets, updateTickets] = useState([]);
+
+  useEffect(() => {
+    const getData = () => {
+      const database = firebase.database();
+      const dbref = database.ref('/');
+      dbref.on('value', (snapshot) => {
+        const db = snapshot.val();
+        //console.log(db);
+        //get numeric keys only, this will change once the database is reorganized
+        const keys = Object.keys(db).filter(k => !isNaN(Number(k)));
+        //console.log(keys);
+        const blank_ticket =     {
+          "ticket": "0",
+          "date": "",
+          "exercise": "",
+          "message": "",
+          "student": {
+            "id": "",
+            "name": "",
+          },
+          "category": "null",
+        };
+        const new_tickets = keys.map(k => {
+          const tx = JSON.parse(JSON.stringify(blank_ticket));
+          tx["ticket"] = k;
+          tx["date"] = db[k]["date"];
+          tx["exercise"] = db[k]["exercise"];
+          tx["message"] = db[k]["message"];
+          tx["student"] = db[k]["student"];
+          tx["category"] = db[k]["category"];
+          return tx;
+        });
+        //console.log(new_tickets);
+        updateTickets(new_tickets);
+      });
+    }
+    getData();
+  }, []);
 
   return(  
   <div className={stylesheet.wrapper}>
