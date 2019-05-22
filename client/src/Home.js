@@ -30,6 +30,7 @@ const SelectPage = () => {
   const navigateToStudents = () => {navigateTo("/newticket/");}
   const navigateToMentors = () => {navigateTo("/queue/");}
   const navigateToSingleTicket = () => {navigateTo("/ticket/2/");}
+  const navigateToNotes = () => {navigateTo("/notes/");}
   return (
     <div>
       <h1>Mentor's Assistant</h1>
@@ -39,13 +40,16 @@ const SelectPage = () => {
         </Fab>&nbsp; &nbsp;
         <Fab variant="extended" onClick={navigateToMentors} color="primary" aria-label="Add">
           Mentors
-        </Fab> </div>
+        </Fab> &nbsp; &nbsp;
+        <Fab variant="extended" onClick={navigateToNotes} color="primary" aria-label="Add">
+          Notes
+        </Fab></div>
         <br />
         <Divider />
         <br />
         <Fab variant="extended" onClick={navigateToSingleTicket} color="primary" aria-label="Add">
           See Example of Single Ticket
-        </Fab> 
+        </Fab>
     </div>
   );
 }
@@ -65,9 +69,9 @@ const Home = () => {
 
         <Grid className={CSS_styles.centeredGrid} item xs={3}>
           <SelectPage />
-        </Grid>   
+        </Grid>
 
-      </Grid> 
+      </Grid>
     </div>
   );
 }
