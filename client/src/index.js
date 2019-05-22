@@ -4,6 +4,7 @@ import Home from './Home';
 import SingleTicket from './SingleTicket';
 import QueueView from './QueueView';
 import NewTicket from './NewTicketComponents/NewTicket';
+import StudentTicketView from './StudentTicketView';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 //ROUTES
@@ -19,6 +20,7 @@ const routing = (
       <Route path="/queue/" component={QueueView} />
       <Route exact path="/" component={Home} />
       <Route exact path="/newticket/" component={NewTicket} />
+      <Route path="/ticket/:id/studentView" component={StudentTicketView}/>
     </div>
   </Router>
 )

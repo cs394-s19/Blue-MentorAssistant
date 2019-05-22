@@ -25,7 +25,7 @@ const classes = {
 
 
 
-const TicketHeader = ({classes, ticket}) => {
+const TicketHeader = ({classes, ticket, userType}) => {
   const [title, setTitle] = useState("...");
   const [exercise, setExercise] = useState("...");
   const [submitDate, setSubmitDate] = useState("...")
