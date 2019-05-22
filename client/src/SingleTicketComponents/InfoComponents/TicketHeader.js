@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select'
-
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ArrowBack from '@material-ui/icons/ArrowBack';
@@ -48,7 +48,9 @@ const TicketHeader = ({classes, ticket, userType}) => {
       <AppBar position="static">
            <Toolbar>
              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-               <ArrowBack />
+                <Link to="/queue/" style={{textDecoration: 'none', color: 'white'}}>
+                  <ArrowBack />
+                </Link>
              </IconButton>
              <Typography variant="h6" color="inherit" className={classes.grow}>
               Ticket
