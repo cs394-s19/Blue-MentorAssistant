@@ -54,6 +54,7 @@ const classes = {
 
 const dummyTicket = {
   category: "...",
+  exercise: "...",
   date: "...",
   message: "...",
   response: {0: "...",
@@ -74,12 +75,17 @@ const classesMS = makeStyles(classes);
 
 const SingleTicket = ({match}) => {
   const [ticket, setTicket] = useState(dummyTicket)
+  console.log(match.params.quarter+ '/' + match.params.exercise + '/' + match.params.id);
   const getTicket = () =>
   {
     const database = firebase.database();
-    const ticketRef = database.ref(match.params.id);
+    const quarter = match.params.quarter;
+    const exercise = match.params.exercise;
+    
+    const ticketRef = database.ref('/' + quarter + '/' + exercise + '/tickets/' + match.params.id + '/');
      ticketRef.once('value').then((snapshot) => {
-      setTicket(snapshot.val());
+      if (snapshot.val())
+        setTicket(snapshot.val());
     });
   }
 

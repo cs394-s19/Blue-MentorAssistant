@@ -142,7 +142,7 @@ const TextBlocks = ({ classes, getBlocks }) => {
 
   const deleteBlock = (index) => {
     let blocksCopy = blocks;
-    blocksCopy.splice(index);
+    blocksCopy.splice(index, 1);
     updateBlocks(blocksCopy);
     updateNumBlocks(numBlocks-1);
   }

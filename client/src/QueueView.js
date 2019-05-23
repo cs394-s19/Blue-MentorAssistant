@@ -57,7 +57,7 @@ const QueueHeader = ({styles}) => {
           <IconButton onClick={handleBackBtn} className={stylesheet.backButton} color="inherit" aria-label="back">
             <ArrowBack />
           </IconButton>
-          <h3>Mentor's Assistant | Queue</h3>
+          <h3>Mentor's Assistant | Queue | Winter 2019</h3>
         </Toolbar>
       </AppBar>
     </div>
@@ -66,12 +66,29 @@ const QueueHeader = ({styles}) => {
 
 const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
+  const removeTrailingZero = (x) => {
+    if((!isNaN(Number(x)))&&(x.substring(0,1) == '0')) {
+      return x.substring(1);
+    }
+    return x;
+  }
+  const getDateString = (date) => {
+    if(isNaN(Number(date))){
+      console.log("queue view error: incorrect date string");
+      return "";
+    }
+    const iso = new Date(Number(date)).toISOString();
+    const year = iso.substring(0,4);
+    const month = removeTrailingZero(iso.substring(8,10));
+    const day = removeTrailingZero(iso.substring(5,7));
+    return day + "/" + month + "/" + year;
+  }
   const QueueListItems = tickets.map(ticket => 
   <ListItem button>
-    <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["ticket"]}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student"]["name"]}</p> <p>{ticket["date"]}</p><HelpOutline></HelpOutline></div></a></ListItemText>
+    <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><HelpOutline></HelpOutline></div></a></ListItemText>
   </ListItem>
   );
-  console.log(QueueListItems);
+  //console.log(QueueListItems);
   return(
     <List className={stylesheet.list}>
       <ListItem button disabled>
@@ -86,53 +103,64 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = [
-    {
-      "ticket": "0",
-      "date": "2017-05-24",
-      "exercise": "HW1: Fingers",
-      "message": "I’m getting an error...",
-      "student": {
-        "id": "bbb0000",
-        "name": "Joseph Doe",
+      {
+        "ticket": "0",
+        "date": "",
+        "exercise": "",
+        "message": "",
+        "student_id": "",
+        "student_name": "",
+        "category": "null",
+        "quarter": "winter2019",
       },
-      "category": "null",
-    },
   ];
-  const [tickets, updateTickets] = useState([]);
+  const [tickets, updateTickets] = useState(debugger_tickets);
 
   useEffect(() => {
     const getData = () => {
       const database = firebase.database();
-      const dbref = database.ref('/');
+
+      //TODO: Make this dynamic
+      const current_quarter = 'winter2019';
+
+      const dbref = database.ref('/'+current_quarter+'/');
       dbref.on('value', (snapshot) => {
         const db = snapshot.val();
-        //console.log(db);
+        console.log(db);
         //get numeric keys only, this will change once the database is reorganized
-        const keys = Object.keys(db).filter(k => !isNaN(Number(k)));
-        //console.log(keys);
+        const exercises = Object.keys(db);
+        console.log(exercises);
         const blank_ticket =     {
           "ticket": "0",
           "date": "",
           "exercise": "",
           "message": "",
-          "student": {
-            "id": "",
-            "name": "",
-          },
+          "student_id": "",
+          "student_name": "",
           "category": "null",
+          "quarter": "winter2019",
         };
-        const new_tickets = keys.map(k => {
-          const tx = JSON.parse(JSON.stringify(blank_ticket));
-          tx["ticket"] = k;
-          tx["date"] = db[k]["date"];
-          tx["exercise"] = db[k]["exercise"];
-          tx["message"] = db[k]["message"];
-          tx["student"] = db[k]["student"];
-          tx["category"] = db[k]["category"];
-          return tx;
+
+        const new_tickets = exercises.map(exercise => 
+        {
+          const tickets_from_exercises = Object.keys(db[exercise]["tickets"]).map(k => {
+            console.log(k);
+            const tx = JSON.parse(JSON.stringify(blank_ticket));
+            tx["ticket"] = k;
+            tx["date"] = db[exercise]["tickets"][k]["date"];
+            tx["exercise"] = exercise;
+            tx["message"] = db[exercise]["tickets"][k]["message"];
+            tx["student_name"] = db[exercise]["tickets"][k]["student"]["name"];
+            tx["student_id"] = db[exercise]["tickets"][k]["student"]["id"];
+            tx["category"] = db[exercise]["tickets"][k]["category"];
+            tx["quarter"] = current_quarter;
+            return tx;
+          });
+          return tickets_from_exercises;
         });
-        //console.log(new_tickets);
-        updateTickets(new_tickets);
+        const new_tickets_flat = new_tickets.flat();
+        console.log(new_tickets_flat);
+        updateTickets(new_tickets_flat);
       });
     }
     getData();

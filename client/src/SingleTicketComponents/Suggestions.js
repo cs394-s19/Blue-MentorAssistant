@@ -53,8 +53,8 @@ const Suggestions = ({classes, ticket}) => {
 
   const getSuggestions = () =>
   {
-    setSug0(ReactHtmlParser(ticket['response']['0']));
-    setSug1(ReactHtmlParser(ticket['response']['1']));
+    // setSug0(ReactHtmlParser(ticket['response']['0']));
+    // setSug1(ReactHtmlParser(ticket['response']['1']));
   }
   useEffect(() =>
   {
