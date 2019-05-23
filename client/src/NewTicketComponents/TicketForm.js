@@ -49,6 +49,11 @@ const classes = {
     width: '48%',
 
   },
+  button: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '2%',
+  },
 };
 
 
@@ -121,7 +126,7 @@ const TicketForm = ({ classes }) => {
     setTextBlocks(blocks);
   }
 
-  
+
 
   return (
     <div>
@@ -206,7 +211,7 @@ const TicketForm = ({ classes }) => {
         <TextBlocks classes={classes} getBlocks={getBlocks}></TextBlocks>
       </div>
       <div className={classes.titleDiv}>
-      <Button onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Submit</Button>
+      <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Submit</Button>
       </div>
     </div>
   );

@@ -10,6 +10,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Fab from '@material-ui/core/Fab';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 
 const classes = {
@@ -23,6 +28,10 @@ const classes = {
     marginRight: 'Auto',
 
   },
+  addButton: {
+
+    float: 'right',
+  },
   blocksDiv: {
     display: 'flex',
     flexDirection: 'column',
@@ -31,7 +40,12 @@ const classes = {
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
+    border: '2px solid red',
 
+  },
+
+  removeButton: {
+      backgroundColor: "white"
   },
 
   statusDiv: {
@@ -115,10 +129,10 @@ const TextBlocks = ({ classes, getBlocks }) => {
         <TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>
       ))}
       <div>
-        <Fab color="primary" aria-label="Add" onClick={()=>newBlock()}>
+        <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
           <AddIcon />
-        </Fab> 
-        
+        </Fab>
+
       </div>
     </div>
   );
@@ -134,19 +148,26 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selected, setSelected] = useState(-1);
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  // function handleClick(event) {
+  //   setAnchorEl(event.currentTarget);
+  // }
 
-  const handleMenu = (index) => {
-    setAnchorEl(null);
-    setSelected(index);
-    setType(inputTypes[index]);
-    updateTextBlock(blockIndex, inputTypes[index], text, label);
-  }
+  // const handleMenu = (index) => {
+  //   setAnchorEl(null);
+  //   setSelected(index);
+  //   setType(inputTypes[index]);
+  //   updateTextBlock(blockIndex, inputTypes[index], text, label);
+  // }
 
-  function handleClose() {
-    setAnchorEl(null);
+
+
+  // function handleClose() {
+  //   setAnchorEl(null);
+  // }
+
+  const handleType = (event) => {
+    setType(event.target.value);
+    updateTextBlock(blockIndex, event.target.value, text, label);
   }
 
   const handleTextChange = (value) => {
@@ -182,24 +203,38 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
 
   return (
     <div className={classes.titleDiv}>
-      <Button
-        aria-owns={anchorEl ? 'simple-menu' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        {(type === '' ? "Type" : shownInputTypes[selected])}
-      </Button>
-      <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {inputTypes.map((option, index) => (
-          <MenuItem
-            key={option}
-            selected={index === selected}
-            onClick={event => handleMenu(index)}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
+      <FormControl component="fieldset" className={classes.formControl}>
+        <FormLabel component="legend">Type of Input</FormLabel>
+        <RadioGroup
+          
+          name="gender2"
+          className={classes.group}
+          value={type}
+          onChange={handleType}
+        >
+          <FormControlLabel
+            value="stuckInput"
+            control={<Radio color="primary" />}
+            label="Text"
+            labelPlacement="start"
+          />
+          <FormControlLabel
+            value="computerInput"
+            control={<Radio color="primary" />}
+            label="Input"
+            labelPlacement="start"
+          />
+          <FormControlLabel
+            value="computerOutput"
+            control={<Radio color="primary" />}
+            label="Output"
+            labelPlacement="start"
+          />
+          
+          
+        </RadioGroup>
+
+      </FormControl>
       <TextField
           id="outlined-full-width"
           label="Text"
@@ -214,7 +249,7 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             shrink: true,
           }}
         />
-        <TextField
+        {/* <TextField
           id="outlined-full-width"
           label="Label"
           className={classes.titleField}
@@ -227,8 +262,8 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
           InputLabelProps={{
             shrink: true,
           }}
-        />
-        <Fab color="primary" aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
+        /> */}
+        <Fab color="primary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
           <RemoveIcon />
         </Fab>
     </div>

@@ -58,7 +58,7 @@ const TicketHeader = ({classes, ticket, userType}) => {
              <Button color="inherit">Save</Button>
            </Toolbar>
          </AppBar>
-         
+
          <div className={classes.titleDiv}>
 
 

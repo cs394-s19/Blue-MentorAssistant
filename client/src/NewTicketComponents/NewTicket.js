@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 
 
 const classes = {
@@ -18,6 +19,7 @@ const classes = {
     marginRight: 'auto',
     marginTop: "30px",
     marginBottom: "30px",
+
   },
   root: {
      flexGrow: 1,
@@ -38,7 +40,7 @@ const classes = {
     left: '0px',
 
   },
-  
+
 };
 
 const form_classes = {
@@ -103,12 +105,18 @@ const Header = () => {
 
 const NewTicket = () => {
   const CSS_classes = classesMS();
-  
+
   return (
     <div className={CSS_classes.AppWrapper}>
       <div className = {CSS_classes.App}>
             <Paper className = {CSS_classes.paper} elevation = {6}>
-              <Header />
+            <AppBar position="static">
+              <Toolbar>
+                <Typography variant="h6" color="inherit" className={CSS_classes.grow}>
+                  New Ticket
+                </Typography>
+              </Toolbar>
+            </AppBar>
               <TicketForm classes={form_classes} />
             </Paper>
       </div>
