@@ -16,6 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 
+
 const classes = {
   titleDiv: {
     display: 'flex',
@@ -27,6 +28,10 @@ const classes = {
     marginRight: 'Auto',
 
   },
+  addButton: {
+
+    float: 'right',
+  },
   blocksDiv: {
     display: 'flex',
     flexDirection: 'column',
@@ -35,7 +40,12 @@ const classes = {
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
+    border: '2px solid red',
 
+  },
+
+  removeButton: {
+      backgroundColor: "white"
   },
 
   statusDiv: {
@@ -119,10 +129,10 @@ const TextBlocks = ({ classes, getBlocks }) => {
         <TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>
       ))}
       <div>
-        <Fab color="primary" aria-label="Add" onClick={()=>newBlock()}>
+        <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
           <AddIcon />
-        </Fab> 
-        
+        </Fab>
+
       </div>
     </div>
   );
@@ -138,9 +148,9 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selected, setSelected] = useState(-1);
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  // function handleClick(event) {
+  //   setAnchorEl(event.currentTarget);
+  // }
 
   // const handleMenu = (index) => {
   //   setAnchorEl(null);
@@ -149,12 +159,16 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
   //   updateTextBlock(blockIndex, inputTypes[index], text, label);
   // }
 
-  function handleType(event) {
-    setType(event.target.value);
-    console.log(type)
-    updateTextBlock(blockIndex, type, text, label);
-  }
 
+
+  // function handleClose() {
+  //   setAnchorEl(null);
+  // }
+
+  const handleType = (event) => {
+    setType(event.target.value);
+    updateTextBlock(blockIndex, event.target.value, text, label);
+  }
 
   const handleTextChange = (value) => {
     setText(value);
@@ -249,8 +263,7 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             shrink: true,
           }}
         /> */}
-        
-        <Fab color="primary" aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
+        <Fab color="primary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
           <RemoveIcon />
         </Fab>
     </div>
