@@ -23,6 +23,10 @@ const classes = {
     marginRight: 'Auto',
 
   },
+  addButton: {
+
+    float: 'right',
+  },
   blocksDiv: {
     display: 'flex',
     flexDirection: 'column',
@@ -31,6 +35,11 @@ const classes = {
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
+    border: '2px solid red',
+
+  },
+
+  removeButton: {
 
   },
 
@@ -115,10 +124,10 @@ const TextBlocks = ({ classes, getBlocks }) => {
         <TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>
       ))}
       <div>
-        <Fab color="primary" aria-label="Add" onClick={()=>newBlock()}>
+        <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
           <AddIcon />
-        </Fab> 
-        
+        </Fab>
+
       </div>
     </div>
   );
@@ -228,7 +237,7 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             shrink: true,
           }}
         />
-        <Fab color="primary" aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
+        <Fab color="primary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
           <RemoveIcon />
         </Fab>
     </div>
