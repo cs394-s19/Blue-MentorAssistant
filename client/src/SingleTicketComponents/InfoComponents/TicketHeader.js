@@ -32,15 +32,17 @@ const TicketHeader = ({classes, ticket, userType}) => {
 
   const GetTicketHeader = () =>
   {
+
     setTitle(ticket['message']);
     setSubmitDate(ticket['date']);
     setExercise(ticket['exercise']);
+ 
   }
 
 
   useEffect(() =>
   {
-    console.log(ticket['message']);
+   
     GetTicketHeader();
   },[ticket]);
   return (

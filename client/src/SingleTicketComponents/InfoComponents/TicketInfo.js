@@ -21,8 +21,8 @@ const TicketInfo = ({classes, ticket}) => {
 
     console.log(ticket);
 
-    setCode(ticket['textBlocks']['0']['text']);
-    setOutput(ticket['textBlocks']['1']['text']);
+    // setCode(ticket['textBlocks']['0']['text']);
+    // setOutput(ticket['textBlocks']['1']['text']);
 
   }
   useEffect(() => {
