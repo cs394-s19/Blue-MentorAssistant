@@ -217,6 +217,7 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             labelPlacement="start"
           />
           
+          
         </RadioGroup>
 
       </FormControl>
