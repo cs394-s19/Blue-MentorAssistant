@@ -15,14 +15,28 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
+import Paper from '@material-ui/core/Paper';
+
 
 
 const classes = {
+
   titleDiv: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '90%',
+    marginTop: '10px',
+    marginLeft: 'Auto',
+    marginRight: 'Auto',
+
+
+  },
+  inputPaper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
@@ -40,12 +54,12 @@ const classes = {
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
-    border: '2px solid red',
+
 
   },
 
   removeButton: {
-      backgroundColor: "white"
+
   },
 
   statusDiv: {
@@ -57,12 +71,24 @@ const classes = {
     marginLeft: 'Auto',
     marginRight: 'Auto',
   },
+
   titleField: {
+    marginTop: '4%',
     display: 'flex',
     width: '100%',
+    marginRight: '20px',
+
 
     // backgroundColor: '#FFFFFF',
   },
+
+  removeDiv: {
+    height: '50%',
+
+
+
+  },
+
   codeField: {
     display: 'flex',
     width: '100%',
@@ -74,10 +100,8 @@ const classes = {
 
   },
   formControl: {
-    display: 'flex',
-    marginTop: '6px',
-    width: '48%',
-
+    flexShrink: '4',
+    padding: '10px',
   },
 };
 
@@ -203,52 +227,54 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
 
   return (
     <div className={classes.titleDiv}>
+      <Paper className={classes.inputPaper} elevation = {2}>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">Type of Input</FormLabel>
-        <RadioGroup
-          
-          name="gender2"
-          className={classes.group}
-          value={type}
-          onChange={handleType}
-        >
+          <RadioGroup
+            name="InputType"
+            className={classes.group}
+            value={type}
+            onChange={handleType}
+          >
           <FormControlLabel
             value="stuckInput"
             control={<Radio color="primary" />}
             label="Text"
-            labelPlacement="start"
+
           />
           <FormControlLabel
             value="computerInput"
             control={<Radio color="primary" />}
             label="Input"
-            labelPlacement="start"
+
           />
           <FormControlLabel
             value="computerOutput"
             control={<Radio color="primary" />}
             label="Output"
-            labelPlacement="start"
+
           />
-          
-          
+
+
         </RadioGroup>
 
       </FormControl>
-      <TextField
-          id="outlined-full-width"
-          label="Text"
-          className={classes.titleField}
-          value={text}
-          onChange={({target}) => handleTextChange(target.value)}
-          margin="normal"
-          multiline
-          rows={3}
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+
+        <TextField
+            id="outlined-full-width"
+            label="Text"
+            className={classes.titleField}
+            value={text}
+            onChange={({target}) => handleTextChange(target.value)}
+            margin="normal"
+            multiline
+            rows={3}
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+
         {/* <TextField
           id="outlined-full-width"
           label="Label"
@@ -263,9 +289,11 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             shrink: true,
           }}
         /> */}
-        <Fab color="primary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
-          <RemoveIcon />
-        </Fab>
+        <Button variant="outlined" color="secondary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
+            <RemoveIcon />
+        </Button>
+        </Paper>
+
     </div>
   );
 }

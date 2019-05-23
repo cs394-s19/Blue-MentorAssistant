@@ -174,7 +174,7 @@ const TicketForm = ({ classes }) => {
       <div className={classes.titleDiv}>
         <TextField
           id="outlined-full-width"
-          label="Describe your problem"
+          label="Problem Description"
           className={classes.titleField}
           value={message}
           onChange={({target}) => setMessage(target.value)}
