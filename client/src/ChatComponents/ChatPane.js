@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, List, ListItem } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -33,4 +33,16 @@ const ChatPane = ({userType, ticket}) =>
     {
         database.ref('winter2019/exercise1/tickets' + match.params.id + '/')
     }
+    return (
+        <div>
+            <List>
+                <ListItem>
+                    <p>'Stuff!'</p>
+                </ListItem>
+                {messages.map(message => <ListItem>
+                    <p>{message}</p>
+                </ListItem>)};
+            </List>
+        </div>
+    )
 }
