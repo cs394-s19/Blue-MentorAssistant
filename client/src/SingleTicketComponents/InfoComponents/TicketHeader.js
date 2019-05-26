@@ -25,7 +25,7 @@ const classes = {
 
 
 
-const TicketHeader = ({classes, ticket, userType}) => {
+const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
   const [title, setTitle] = useState("...");
   const [exercise, setExercise] = useState("...");
   const [submitDate, setSubmitDate] = useState("...")
@@ -35,7 +35,7 @@ const TicketHeader = ({classes, ticket, userType}) => {
 
     setTitle(ticket['message']);
     setSubmitDate(ticket['date']);
-    setExercise(ticket['exercise']);
+    setExercise(exerciseProp);
  
   }
 

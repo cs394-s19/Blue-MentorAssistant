@@ -23,16 +23,17 @@ const classes = {
   typography: {
 
   },
-  suggestionsDiv: {
+  notesDiv: {
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '10px',
   },
-  suggestionPaper: {
+  notePaper: {
     marginTop: '5px',
+    paddingTop: '5px',
   },
-  allSuggestions: {
+  allnotes: {
 
   },
   typographyDiv: {
@@ -62,73 +63,38 @@ const classes = {
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '2%',
-    border: '2px solid red',
-
   },
-
-  toField: {
-    position: 'relative',
-    width: '100%',
-        marginTop: '10px',
-
-  },
-
-  subjectField: {
-    position: 'relative',
-    marginTop: '10px',
-    width: '100%',
-
-  },
-
   bodyField: {
     position: 'relative',
-    marginTop: '10px',
-    width: '100%',
-
+    width: '100%'
   },
-
+  newMessageDiv: {
+    position: 'absolute',
+    bottom: '20px',
+    width: '90%'
+  },
+  button: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '2%',
+    marginTop: '5px'
+  }
 };
 
-const styles = makeStyles({
-  wrapper: {
-    background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
-    height: '1000px',
-    width: '100%',
-  },
-  app: {
-    fontFamily: 'Roboto',
-    height: '100%',
-  },
-  appbarwrapper: {
-    width: '60%',
-  },
-  appbar: {
 
-  },
-  toolbar: {
-
-  },
-  list: {
-    width: '60%',
-  },
-  ticketinfo: {
-    display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 50px',
-  },
-  links: {
-    color: 'black',
-    textDecoration: 'none',
-  },
-});
-
-
-const InternalNotes = ({classes, ticket}) => {
-  const [isModalOpen, toggleModal] = useState(false)
+const InternalNotes = ({exercise, classes, ticket, quarter}) => {
+  const [isModalOpen, toggleModal] = useState(false);
+  const [newNote, updateNewNote] = useState('');
 
   const handleModal = () => {
     toggleModal(!isModalOpen);
-    // console.log(isModalOpen);
   };
+  const handleSubmit = () => {
+    console.log(newNote);
+    const database = firebase.database();
+    const ref = database.ref(`${quarter}/${exercise}/notes`);
+    ref.push(newNote);
+  }
 
   return (
     <div>
@@ -142,41 +108,54 @@ const InternalNotes = ({classes, ticket}) => {
         onClose={handleModal}
       >
         <Paper className={classes.emailForm}>
-          <NotesView/>
+          <div className={classes.emailDiv}>
+            <Typography variant="h5" className={classes.typography}>
+              Notes for {exercise}:
+            </Typography>
+            <NotesView/>
+            <div className={classes.newMessageDiv}>
+              <TextField
+                id="outlined-multiline-static"
+                label="Body:"
+                multiline
+                rows="3"
+                defaultValue=""
+                value={newNote}
+                className={classes.bodyField}
+                onChange={({target}) => updateNewNote(target.value)}
+                variant="outlined"
+              />
+              <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Send</Button>
+            </div>
+          </div>
         </Paper>
       </Modal>
     </div>
   )
 };
 
-const Note = ({notes, styles}) => {
-  const stylesheet = styles();
-  const NoteListItems = notes.map(note =>
-    <ListItemText>
-      <a className = {stylesheet.links} href={'/winter2019/exercise1/notes/' + note["note"]}>
-        <div className={stylesheet.ticketinfo}><b>{note["message"]}    <br /> </b> </div>
-      </a>
-    </ListItemText>
-  );
-  // console.log(NoteListItems);
+const Note = ({notes, classes}) => {
   
   return(
-    <List className={stylesheet.list}>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Note</p><p>Message</p></div></ListItemText>
-        {NoteListItems}
+    <List>
+      {
+        notes.map((note) => {
+          return(
+            <Paper className={classes.notePaper} elevation = {2}>
+              <ListItem>
+                <ListItemText
+                  primary={note["message"]}
+                  />
+                </ListItem>
+            </Paper>
+          );
+        })
+      }
     </List>
   );
 }
 
 const NotesView = () => {
-  const stylesheet = styles();
-
-  const debugger_note = [
-    {
-      "note": "0",
-      "message": "test",
-    }
-  ];
 
   const [notes, updateNotes] = useState([]);
 
@@ -207,13 +186,9 @@ const NotesView = () => {
   }, []);
 
   return(
-    <div className={stylesheet.wrapper}>
-      <div className={stylesheet.app}>
-        <center>
-          <Note styles={styles} notes = {notes} />
-        </center>
-      </div>
-    </div>
+
+    <Note notes={notes} classes={classes} /> 
+
   );
 }
 

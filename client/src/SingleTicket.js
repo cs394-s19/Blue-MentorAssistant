@@ -102,12 +102,12 @@ const SingleTicket = ({match}) => {
   return (
     <div className={CSS_classes.AppWrapper}>
       <div className = {CSS_classes.App}>
-            <Paper className = {CSS_classes.paper} elevation = {6}>
-              <Info classes = {classes} ticket = {ticket} />
-              <Suggestions classes = {classes} ticket = {ticket} />
-              <div className = {CSS_classes.flexBox} >  
-                <Footer classes = {classes} ticket = {ticket} />
-                <InternalNotes classes = {classes} ticket = {ticket}/>
+            <Paper className={CSS_classes.paper} elevation={6}>
+              <Info exercise={match.params.exercise} classes={classes} ticket={ticket} />
+              <Suggestions classes={classes} ticket={ticket} />
+              <div className={CSS_classes.flexBox} >  
+                <Footer classes={classes} ticket={ticket} />
+                <InternalNotes quarter={match.params.quarter} exercise={match.params.exercise} classes={classes} ticket={ticket}/>
               </div>
             </Paper>
       </div>

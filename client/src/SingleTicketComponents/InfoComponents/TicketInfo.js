@@ -11,8 +11,6 @@ const classes = {
 
 
 const TicketInfo = ({classes, ticket}) => {
-  const [code, setCode] = useState("...");
-  const [output, setOutput] = useState("...");
   const [blocks, setBlocks] = useState([]);
 
   console.log(blocks);
