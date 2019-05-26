@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-
+import { firebase } from '../firebaseConfig';
 
 const classes = {
   root: {
@@ -84,7 +84,7 @@ const classes = {
 
 };
 
-const Footer = ({classes, ticket}) => {
+const Footer = ({classes, ticket, id, quarter, exercise}) => {
   const [isModalOpen, toggleModal] = useState(false)
 
   const handleModal = () => {
@@ -92,10 +92,16 @@ const Footer = ({classes, ticket}) => {
     console.log(isModalOpen);
   };
 
+  const handleSubmit = () => {
+    let database = firebase.database();
+    database.ref(`${quarter}/${exercise}/tickets/${id}`).update({ status: 'Completed'});
+  }
+
   return (
     <div>
       <div className={classes.openModalBtn}>
         <Button onClick={handleModal} variant="contained" color="primary" className={classes.openModalBtn}>Send Email</Button>
+        <Button onClick={handleSubmit} variant="contained" color="primary" className={classes.openModalBtn}>Complete</Button>
       </div>
       <Modal
         aria-labelledby="simple-modal-title"

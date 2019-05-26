@@ -90,6 +90,8 @@ const SingleTicket = ({match}) => {
      ticketRef.once('value').then((snapshot) => {
       if (snapshot.val())
         setTicket(snapshot.val());
+        if (snapshot.val()['status'] === 'Unread')
+          database.ref(`${quarter}/${exercise}/tickets/${match.params.id}`).update({ status: 'Opened'});
     });
   }
 
@@ -106,7 +108,7 @@ const SingleTicket = ({match}) => {
               <Info exercise={match.params.exercise} classes={classes} ticket={ticket} />
               <Suggestions classes={classes} ticket={ticket} />
               <div className={CSS_classes.flexBox} >  
-                <Footer classes={classes} ticket={ticket} />
+                <Footer classes={classes} ticket={ticket} id={match.params.id} quarter={match.params.quarter} exercise={match.params.exercise} />
                 <InternalNotes quarter={match.params.quarter} exercise={match.params.exercise} classes={classes} ticket={ticket}/>
               </div>
             </Paper>
