@@ -61,16 +61,16 @@ const dummyTicket = {
   exercise: "...",
   date: "...",
   message: "...",
-  response: {0: "...",
-             1: "..."},
+  response: ["...",
+             "..."],
   student: {id: "0",
             name: "..."},
-  textBlocks: {0: {label: "...",
+  textBlocks: [{label: "...",
                    text: "...",
                    type: "..."},
-               1: {label: "...",
+                {label: "...",
                    text: "...",
-                   type: "..."}}
+                   type: "..."}]
 };
 
 
