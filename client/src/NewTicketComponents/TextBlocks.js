@@ -142,16 +142,20 @@ const TextBlocks = ({ classes, getBlocks }) => {
 
   const deleteBlock = (index) => {
     let blocksCopy = blocks;
-    blocksCopy.splice(index, 1);
+    //blocksCopy.splice(index, 1);
+    blocksCopy[index] = null;
     updateBlocks(blocksCopy);
     updateNumBlocks(numBlocks-1);
   }
 
   return (
     <div className={classes.blocksDiv}>
-      {blocks.map((block, index) => (
-        <TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>
-      ))}
+      {blocks.map((block, index) => {
+        if (block != null){
+          return (<TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>)
+        }
+        
+      })}
       <div>
         <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
           <AddIcon />
