@@ -96,7 +96,7 @@ const TicketForm = ({ classes }) => {
     myJson["date"] = d.getTime();
     let database = firebase.database();
     database.ref('winter2019/' + exercises[selectedIndex] + '/tickets').push(myJson);
-
+    window.location.href = "/newticket/";
 
   }
 
