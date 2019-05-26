@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Info from './SingleTicketComponents/Info';
 import Suggestions from './SingleTicketComponents/Suggestions';
 import Footer from './SingleTicketComponents/Footer';
+import InternalNotes from './SingleTicketComponents/InternalNotes';
 import {getTicket} from './databaseHelpers';
-
 import { firebase } from './firebaseConfig';
 
 const classes = {
@@ -49,6 +49,10 @@ const classes = {
     border: '1px solid red',
     width: '500px',
     marginLeft: '400px',
+  },
+  flexBox: {
+    display: "flex",
+    justifyContent: "center",
   },
 };
 
@@ -101,7 +105,10 @@ const SingleTicket = ({match}) => {
             <Paper className = {CSS_classes.paper} elevation = {6}>
               <Info classes = {classes} ticket = {ticket} />
               <Suggestions classes = {classes} ticket = {ticket} />
-              <Footer classes = {classes} ticket = {ticket} />
+              <div className = {CSS_classes.flexBox} >  
+                <Footer classes = {classes} ticket = {ticket} />
+                <InternalNotes classes = {classes} ticket = {ticket}/>
+              </div>
             </Paper>
       </div>
     </div>

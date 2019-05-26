@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/styles';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import { firebase } from '../firebaseConfig';
+import ReactHtmlParser from 'react-html-parser';
 
 const classes = {
   root: {
@@ -126,7 +127,7 @@ const InternalNotes = ({classes, ticket}) => {
 
   const handleModal = () => {
     toggleModal(!isModalOpen);
-    console.log(isModalOpen);
+    // console.log(isModalOpen);
   };
 
   return (
@@ -134,36 +135,35 @@ const InternalNotes = ({classes, ticket}) => {
       <div className={classes.openModalBtn}>
         <Button onClick={handleModal} variant="contained" color="primary" className={classes.openModalBtn}>See Notes</Button>
       </div>
-
-
-
-    <Modal
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      open= {isModalOpen}
-      onClose={handleModal}
-    >
-      <Paper className={classes.emailForm}>
-
-
-      </Paper>
-    </Modal>
-
-  </div>
-
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open= {isModalOpen}
+        onClose={handleModal}
+      >
+        <Paper className={classes.emailForm}>
+          <NotesView/>
+        </Paper>
+      </Modal>
+    </div>
   )
 };
 
 const Note = ({notes, styles}) => {
   const stylesheet = styles();
   const NoteListItems = notes.map(note =>
-  <ListItemText><a className = {stylesheet.links} href={'/winter2019/exercise1/notes/' + note["note"]}><div className={stylesheet.ticketinfo}><b>{note["message"]}    <br /> </b> </div></a></ListItemText>
+    <ListItemText>
+      <a className = {stylesheet.links} href={'/winter2019/exercise1/notes/' + note["note"]}>
+        <div className={stylesheet.ticketinfo}><b>{note["message"]}    <br /> </b> </div>
+      </a>
+    </ListItemText>
   );
-  console.log(NoteListItems);
+  // console.log(NoteListItems);
+  
   return(
     <List className={stylesheet.list}>
         <ListItemText><div className={stylesheet.ticketinfo}><p>Note</p><p>Message</p></div></ListItemText>
-      {NoteListItems}
+        {NoteListItems}
     </List>
   );
 }
@@ -186,7 +186,7 @@ const NotesView = () => {
       const dbref = database.ref('/winter2019/exercise1/notes/');
       dbref.on('value', (snapshot) => {
         const db = snapshot.val();
-        console.log(db);
+        console.log("Yo");
         const keys = Object.keys(db).filter(k => !isNaN(Number(k)));
         const blankNote = {
           "note": "0",
@@ -197,7 +197,7 @@ const NotesView = () => {
           const nt = JSON.parse(JSON.stringify(blankNote));
           nt["note"] = n;
           nt["message"] = db[n]["message"];
-          console.log(nt)
+          console.log("Hiya")
           return nt;
         });
         updateNotes(new_notes);
@@ -207,13 +207,13 @@ const NotesView = () => {
   }, []);
 
   return(
-  <div className={stylesheet.wrapper}>
-    <div className={stylesheet.app}>
-      <center>
-        <Note styles={styles} notes = {notes} />
-      </center>
+    <div className={stylesheet.wrapper}>
+      <div className={stylesheet.app}>
+        <center>
+          <Note styles={styles} notes = {notes} />
+        </center>
+      </div>
     </div>
-  </div>
   );
 }
 

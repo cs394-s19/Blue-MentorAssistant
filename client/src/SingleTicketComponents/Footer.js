@@ -95,34 +95,20 @@ const Footer = ({classes, ticket}) => {
   return (
     <div>
       <div className={classes.openModalBtn}>
-
         <Button onClick={handleModal} variant="contained" color="primary" className={classes.openModalBtn}>Send Email</Button>
-
       </div>
-
-
-
-
-
-
-
-
-    <Modal
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      open= {isModalOpen}
-      onClose={handleModal}
-    >
-      <Paper className={classes.emailForm}>
-
-
-        <div className={classes.emailDiv}>
-
-        <Typography variant="h5" className={classes.typography}>
-          Send Email:
-        </Typography>
-
-          <TextField
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open= {isModalOpen}
+        onClose={handleModal}
+      >
+        <Paper className={classes.emailForm}>
+          <div className={classes.emailDiv}>
+            <Typography variant="h5" className={classes.typography}>
+              Send Email:
+            </Typography>
+            <TextField
                 disabled
                 id="outlined-multiline-static"
                 label="To:"
@@ -132,9 +118,9 @@ const Footer = ({classes, ticket}) => {
                 value="VictorAung2021@u.northwestern.edu"
                 className={classes.toField}
                 variant="outlined"
-              />
+            />
 
-          <TextField
+            <TextField
                 id="outlined-multiline-static"
                 label="Subject:"
                 multiline
@@ -143,30 +129,26 @@ const Footer = ({classes, ticket}) => {
                 value="test"
                 className={classes.subjectField}
                 variant="outlined"
-              />
+            />
 
-              <TextField
-                    id="outlined-multiline-static"
-                    label="Body:"
-                    multiline
-                    rows="16"
-                    defaultValue=""
-                    value="test"
-                    className={classes.bodyField}
-                    variant="outlined"
-                  />
+            <TextField
+                id="outlined-multiline-static"
+                label="Body:"
+                multiline
+                rows="16"
+                defaultValue=""
+                value="test"
+                className={classes.bodyField}
+                variant="outlined"
+            />
 
-                  <Typography variant="h5" className={classes.typography}>
-                    Suggestions
-                  </Typography>
-
-        </div>
-
-
-      </Paper>
-    </Modal>
-  </div>
-
+            <Typography variant="h5" className={classes.typography}>
+              Suggestions
+            </Typography>
+          </div>
+        </Paper>
+      </Modal>
+    </div>
   )
 };
 export default withStyles(classes)(Footer);
