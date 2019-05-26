@@ -36,26 +36,25 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
     setTitle(ticket['message']);
     setSubmitDate(getDateString(ticket['date']));
     setExercise(exerciseProp);
- 
+
   }
 
   const getDateString = (date) => {
-    if(isNaN(Number(date))){
-      console.log("queue view error: incorrect date string");
-      return "";
+      if(isNaN(Number(date))){
+        console.log("queue view error: incorrect date string");
+        return "";
+      }
+      const iso = new Date(Number(date)).toISOString();
+      const year = iso.substring(0,4);
+      const day = (iso.substring(8,10));
+      const month = (iso.substring(5,7));
+      return year+'-' + month+ '-'+day;
     }
-    const iso = new Date(Number(date));
-    let month = iso.getMonth()+1<10 ? `0${iso.getMonth()+1}` : iso.getMonth()+1;
-    let day = iso.getDay()+1<10 ? `0${iso.getDay()+1}` : iso.getDay()+1;
-    console.log(iso.getFullYear()+'-' + month+ '-'+day);
-
-    return iso.getFullYear()+'-' + month+ '-'+day;
-  }
 
 
   useEffect(() =>
   {
-   
+
     GetTicketHeader();
   },[ticket]);
   return (
