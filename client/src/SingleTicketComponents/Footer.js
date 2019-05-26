@@ -95,6 +95,7 @@ const Footer = ({classes, ticket, id, quarter, exercise}) => {
   const handleSubmit = () => {
     let database = firebase.database();
     database.ref(`${quarter}/${exercise}/tickets/${id}`).update({ status: 'Completed'});
+    window.location.href = "/queue/";
   }
 
   return (
