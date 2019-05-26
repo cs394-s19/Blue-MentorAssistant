@@ -90,10 +90,14 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
     toggleModal(!isModalOpen);
   };
   const handleSubmit = () => {
-    console.log(newNote);
     const database = firebase.database();
     const ref = database.ref(`${quarter}/${exercise}/notes`);
-    ref.push(newNote);
+    const fullNote = {
+      "note": "0",
+      "message": newNote,
+    };
+    ref.push(fullNote);
+    updateNewNote('');
   }
 
   return (
@@ -112,7 +116,7 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
             <Typography variant="h5" className={classes.typography}>
               Notes for {exercise}:
             </Typography>
-            <NotesView/>
+            <NotesView quarter={quarter} exercise={exercise}/>
             <div className={classes.newMessageDiv}>
               <TextField
                 id="outlined-multiline-static"
@@ -155,33 +159,36 @@ const Note = ({notes, classes}) => {
   );
 }
 
-const NotesView = () => {
+const NotesView = ({quarter, exercise}) => {
 
   const [notes, updateNotes] = useState([]);
 
   useEffect(() => {
     const getData = () => {
       const database = firebase.database();
-      const dbref = database.ref('/winter2019/exercise1/notes/');
+      const dbref = database.ref(`${quarter}/${exercise}/notes`);
       dbref.on('value', (snapshot) => {
-        const db = snapshot.val();
-        console.log("Yo");
-        const keys = Object.keys(db).filter(k => !isNaN(Number(k)));
-        const blankNote = {
-          "note": "0",
-          "message": "",
-        };
+        if (snapshot.val()) {
+          const db = snapshot.val();
+          const keys = Object.keys(db);
+          
+          const blankNote = {
+            "note": "0",
+            "message": "",
+          };
 
-        const new_notes = keys.map(n => {
-          const nt = JSON.parse(JSON.stringify(blankNote));
-          nt["note"] = n;
-          nt["message"] = db[n]["message"];
-          console.log("Hiya")
-          return nt;
-        });
-        updateNotes(new_notes);
+          const new_notes = keys.map(n => {
+            const nt = JSON.parse(JSON.stringify(blankNote));
+            nt["note"] = n;
+            nt["message"] = db[n]["message"];
+            return nt;
+          });
+          updateNotes(new_notes);
+        }
       });
+
     }
+        
     getData();
   }, []);
 
