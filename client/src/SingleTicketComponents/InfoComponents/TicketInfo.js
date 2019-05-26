@@ -12,14 +12,17 @@ const classes = {
 
 const TicketInfo = ({classes, ticket}) => {
   const [code, setCode] = useState("...");
-  const [output, setOutput] = useState("...")
+  const [output, setOutput] = useState("...");
+  const [blocks, setBlocks] = useState([]);
 
-
+  console.log(blocks);
   const getTicketInfo = () =>
   {
 
 
-    console.log(ticket);
+   // console.log(ticket);
+    console.log(ticket["textBlocks"]);
+    setBlocks(ticket["textBlocks"]);
 
     // setCode(ticket['textBlocks']['0']['text']);
     // setOutput(ticket['textBlocks']['1']['text']);
@@ -28,21 +31,43 @@ const TicketInfo = ({classes, ticket}) => {
   useEffect(() => {
     getTicketInfo();
   },[ticket]);
+
+  const convertType = (type) => {
+    console.log(type);
+    switch (type)  {
+      case "computerOutput":
+        return "Output";
+      case "computerInput":
+        return "Input";
+      case "text":
+        return "text";
+      default:
+        return type;
+    }
+  }
   return (
     <div>
-      <div className={classes.titleDiv}>
-      <TextField
-            id="outlined-multiline-static"
-            label="Code"
-            multiline
-            rows="10"
-            defaultValue=""
-            value={code}
-            className={classes.codeField}
-            variant="outlined"
-          />
-      </div>
-      <div className={classes.titleDiv}>
+      {
+        blocks.map((block) => {
+          return(
+              <div className={classes.titleDiv}>
+              <TextField
+                    id="outlined-multiline-static"
+                    label={convertType(block["type"])}
+                    multiline
+                    rows="10"
+                    defaultValue=""
+                    value={block["text"]}
+                    className={classes.codeField}
+                    variant="outlined"
+                  />
+              </div>
+            );
+        })
+      }
+
+    
+      {/* <div className={classes.titleDiv}>
       <TextField
             id="outlined-multiline-static"
             label="Output"
@@ -53,7 +78,7 @@ const TicketInfo = ({classes, ticket}) => {
             className={classes.codeField}
             variant="outlined"
           />
-      </div>
+      </div> */}
     </div>
 
   )
