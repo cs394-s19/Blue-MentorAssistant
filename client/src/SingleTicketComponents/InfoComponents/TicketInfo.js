@@ -46,6 +46,7 @@ const TicketInfo = ({classes, ticket}) => {
   return (
     <div>
       {
+        blocks ?
         blocks.map((block) => {
           return(
               <div className={classes.titleDiv}>
@@ -62,21 +63,9 @@ const TicketInfo = ({classes, ticket}) => {
               </div>
             );
         })
+        :
+        <div></div>
       }
-
-    
-      {/* <div className={classes.titleDiv}>
-      <TextField
-            id="outlined-multiline-static"
-            label="Output"
-            multiline
-            rows="10"
-            defaultValue=""
-            value={output}
-            className={classes.codeField}
-            variant="outlined"
-          />
-      </div> */}
     </div>
 
   )
