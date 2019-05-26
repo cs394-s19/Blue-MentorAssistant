@@ -67,7 +67,7 @@ const QueueHeader = ({styles}) => {
 const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
   const removeTrailingZero = (x) => {
-    if((!isNaN(Number(x)))&&(x.substring(0,1) == '0')) {
+    if((!isNaN(Number(x)))&&(x.substring(0,1) === '0')) {
       return x.substring(1);
     }
     return x;
@@ -83,10 +83,14 @@ const Queue = ({tickets, styles}) => {
     const day = removeTrailingZero(iso.substring(5,7));
     return day + "/" + month + "/" + year;
   }
-  const QueueListItems = tickets.map(ticket => 
-  <ListItem button>
-    <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><HelpOutline></HelpOutline></div></a></ListItemText>
-  </ListItem>
+  const QueueListItems = tickets.map(ticket => {
+    // if (ticket['status'] !== 'Completed')
+      return(
+        <ListItem button>
+        <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+        </ListItem>
+        );
+    }
   );
   //console.log(QueueListItems);
   return(
@@ -139,6 +143,7 @@ const QueueView = () => {
           "student_name": "",
           "category": "null",
           "quarter": "winter2019",
+          "status": ""
         };
 
         const new_tickets = exercises.map(exercise => 
@@ -153,6 +158,7 @@ const QueueView = () => {
             tx["student_name"] = db[exercise]["tickets"][k]["student"]["name"];
             tx["student_id"] = db[exercise]["tickets"][k]["student"]["id"];
             tx["category"] = db[exercise]["tickets"][k]["category"];
+            tx["status"] = db[exercise]["tickets"][k]["status"];
             tx["quarter"] = current_quarter;
             return tx;
           });

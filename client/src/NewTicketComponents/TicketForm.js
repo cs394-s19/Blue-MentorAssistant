@@ -80,6 +80,7 @@ const TicketForm = ({ classes }) => {
       source: exercises[selectedIndex],
       textBlocks: textBlocks,
       category: "Error",
+      status: "Unread"
     };
     const response = await fetch('https://secure-oasis-87770.herokuapp.com/api/form', {
       method: 'POST',
