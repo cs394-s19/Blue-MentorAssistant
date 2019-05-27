@@ -190,6 +190,8 @@ const TicketForm = ({ classes }) => {
       </div>
       <div className={classes.titleDiv}>
       <Button
+        variant="contained"
+        color="primary"
         aria-owns={anchorEl ? 'simple-menu' : undefined}
         aria-haspopup="true"
         onClick={handleClick}
