@@ -12,6 +12,8 @@ import HelpOutline from '@material-ui/icons/HelpOutline';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { firebase } from './firebaseConfig';
+import Paper from '@material-ui/core/Paper';
+
 
 const styles = makeStyles({
   wrapper: {
@@ -33,8 +35,12 @@ const styles = makeStyles({
 
   },
   list: {
+    width: '100%',
+  },
+  listPaper: {
     width: '60%',
   },
+
   ticketinfo: {
     display: 'grid',
     gridTemplateColumns: '450px 170px 150px 50px',
@@ -86,20 +92,24 @@ const Queue = ({tickets, styles}) => {
   const QueueListItems = tickets.map(ticket => {
     // if (ticket['status'] !== 'Completed')
       return(
-        <ListItem button>
-        <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
-        </ListItem>
+  
+          <ListItem button>
+          <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+          </ListItem>
+
         );
     }
   );
   //console.log(QueueListItems);
   return(
+    <Paper className={stylesheet.listPaper}>
     <List className={stylesheet.list}>
       <ListItem button disabled>
         <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p>Date</p><p>Status</p></div></ListItemText>
       </ListItem>
       {QueueListItems}
     </List>
+    </Paper>
   );
 }
 
@@ -146,7 +156,7 @@ const QueueView = () => {
           "status": ""
         };
 
-        const new_tickets = exercises.map(exercise => 
+        const new_tickets = exercises.map(exercise =>
         {
           const tickets_from_exercises = Object.keys(db[exercise]["tickets"]).map(k => {
             console.log(k);
@@ -172,12 +182,14 @@ const QueueView = () => {
     getData();
   }, []);
 
-  return(  
+  return(
   <div className={stylesheet.wrapper}>
-    <div className={stylesheet.app}>  
+    <div className={stylesheet.app}>
       <center>
         <QueueHeader styles={styles} />
-        <Queue styles={styles} tickets={tickets} />
+
+          <Queue styles={styles} tickets={tickets} />
+
       </center>
     </div>
   </div>
