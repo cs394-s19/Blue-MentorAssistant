@@ -139,7 +139,6 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
 };
 
 const Note = ({notes, classes}) => {
-  
   return(
     <List>
       {
@@ -193,9 +192,7 @@ const NotesView = ({quarter, exercise}) => {
   }, []);
 
   return(
-
     <Note notes={notes} classes={classes} /> 
-
   );
 }
 

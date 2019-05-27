@@ -1,5 +1,5 @@
 import { firebase } from './firebaseConfig';
-const getUserSuggestions = (ticket) => {
+const getUserSuggestions = (ticket) => { 
   const userAction = async (key) => {
     const response = await fetch('https://secure-oasis-87770.herokuapp.com/api/form', {
         method: 'POST',
