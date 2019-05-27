@@ -117,7 +117,7 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = [
-      {
+      { 
         "ticket": "0",
         "date": "",
         "exercise": "",

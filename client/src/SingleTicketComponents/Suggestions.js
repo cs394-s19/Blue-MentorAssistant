@@ -69,17 +69,14 @@ const Suggestions = ({classes, ticket}) => {
       </div>
       <div className={classes.allSuggestions}>
         <List>
-
           {
             suggestions ?
             suggestions.map((sug) => {
               return(
                 <Paper className={classes.suggestionPaper} elevation = {2}>
                   <ListItem>
-                    <ListItemText
-                      primary={sug}
-                      />
-                    </ListItem>
+                    <ListItemText primary={ ReactHtmlParser(sug) } />
+                  </ListItem>
                 </Paper>
               );
             })
