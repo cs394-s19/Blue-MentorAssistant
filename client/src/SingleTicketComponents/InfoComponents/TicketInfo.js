@@ -52,7 +52,7 @@ const TicketInfo = ({classes, ticket}) => {
               <div className={classes.titleDiv}>
               <TextField
                     id="outlined-multiline-static"
-                    label={convertType(block["type"])}
+                    label={block["type"] ? convertType(block["type"]) : "       "}
                     multiline
                     rows="10"
                     defaultValue=""

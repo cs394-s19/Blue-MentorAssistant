@@ -29,9 +29,10 @@ const classes = {
     marginRight: 'auto',
     marginTop: '10px',
   },
-  notePaper: {
-    marginTop: '5px',
-    paddingTop: '5px',
+  notePaperDiv: {
+    marginBottom: '10px',
+
+
   },
   allnotes: {
 
@@ -116,7 +117,7 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
             <Typography variant="h5" className={classes.typography}>
               Notes for {exercise}:
             </Typography>
-            <NotesView quarter={quarter} exercise={exercise}/>
+            <NotesView quarter={quarter} exercise={exercise} classes={classes}/>
             <div className={classes.newMessageDiv}>
               <TextField
                 id="outlined-multiline-static"
@@ -129,7 +130,7 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
                 onChange={({target}) => updateNewNote(target.value)}
                 variant="outlined"
               />
-              <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Send</Button>
+              <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Add Note</Button>
             </div>
           </div>
         </Paper>
@@ -140,10 +141,11 @@ const InternalNotes = ({exercise, classes, ticket, quarter}) => {
 
 const Note = ({notes, classes}) => {
   return(
-    <List>
+    <div>
       {
         notes.map((note) => {
           return(
+            <div className={classes.notePaperDiv}>
             <Paper className={classes.notePaper} elevation = {2}>
               <ListItem>
                 <ListItemText
@@ -151,14 +153,15 @@ const Note = ({notes, classes}) => {
                   />
                 </ListItem>
             </Paper>
+            </div>
           );
         })
       }
-    </List>
+    </div>
   );
 }
 
-const NotesView = ({quarter, exercise}) => {
+const NotesView = ({quarter, exercise, classes}) => {
 
   const [notes, updateNotes] = useState([]);
 
@@ -170,7 +173,7 @@ const NotesView = ({quarter, exercise}) => {
         if (snapshot.val()) {
           const db = snapshot.val();
           const keys = Object.keys(db);
-          
+
           const blankNote = {
             "note": "0",
             "message": "",
@@ -187,12 +190,12 @@ const NotesView = ({quarter, exercise}) => {
       });
 
     }
-        
+
     getData();
   }, []);
 
   return(
-    <Note notes={notes} classes={classes} /> 
+    <Note notes={notes} classes={classes} />
   );
 }
 
