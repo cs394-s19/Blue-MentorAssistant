@@ -17,7 +17,7 @@ import NotesView from './notes';
 const routing = (
   <Router>
     <div>
-      <Route path="/ticket/:id" component={SingleTicket} />
+      <Route path="/ticket/:quarter/:exercise/:id" component={SingleTicket} />
       <Route path="/queue/" component={QueueView} />
       <Route exact path="/" component={Home} />
       <Route exact path="/newticket/" component={NewTicket} />

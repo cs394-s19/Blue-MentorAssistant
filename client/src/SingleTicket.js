@@ -5,8 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Info from './SingleTicketComponents/Info';
 import Suggestions from './SingleTicketComponents/Suggestions';
 import Footer from './SingleTicketComponents/Footer';
+import InternalNotes from './SingleTicketComponents/InternalNotes';
 import {getTicket} from './databaseHelpers';
-
 import { firebase } from './firebaseConfig';
 
 const classes = {
@@ -50,22 +50,27 @@ const classes = {
     width: '500px',
     marginLeft: '400px',
   },
+  flexBox: {
+    display: "flex",
+    justifyContent: "center",
+  },
 };
 
 const dummyTicket = {
   category: "...",
+  exercise: "...",
   date: "...",
   message: "...",
-  response: {0: "...",
-             1: "..."},
+  response: ["...",
+             "..."],
   student: {id: "0",
             name: "..."},
-  textBlocks: {0: {label: "...",
+  textBlocks: [{label: "...",
                    text: "...",
                    type: "..."},
-               1: {label: "...",
+                {label: "...",
                    text: "...",
-                   type: "..."}}
+                   type: "..."}]
 };
 
 
@@ -74,12 +79,19 @@ const classesMS = makeStyles(classes);
 
 const SingleTicket = ({match}) => {
   const [ticket, setTicket] = useState(dummyTicket)
+  console.log(match.params.quarter+ '/' + match.params.exercise + '/' + match.params.id);
   const getTicket = () =>
   {
     const database = firebase.database();
-    const ticketRef = database.ref(match.params.id);
+    const quarter = match.params.quarter;
+    const exercise = match.params.exercise;
+    
+    const ticketRef = database.ref('/' + quarter + '/' + exercise + '/tickets/' + match.params.id + '/');
      ticketRef.once('value').then((snapshot) => {
-      setTicket(snapshot.val());
+      if (snapshot.val())
+        setTicket(snapshot.val());
+        if (snapshot.val()['status'] === 'Unread')
+          database.ref(`${quarter}/${exercise}/tickets/${match.params.id}`).update({ status: 'Opened'});
     });
   }
 
@@ -92,10 +104,13 @@ const SingleTicket = ({match}) => {
   return (
     <div className={CSS_classes.AppWrapper}>
       <div className = {CSS_classes.App}>
-            <Paper className = {CSS_classes.paper} elevation = {6}>
-              <Info classes = {classes} ticket = {ticket} />
-              <Suggestions classes = {classes} ticket = {ticket} />
-              <Footer classes = {classes} ticket = {ticket} />
+            <Paper className={CSS_classes.paper} elevation={6}>
+              <Info exercise={match.params.exercise} classes={classes} ticket={ticket} />
+              <Suggestions classes={classes} ticket={ticket} />
+              <div className={CSS_classes.flexBox} >  
+                <Footer classes={classes} ticket={ticket} id={match.params.id} quarter={match.params.quarter} exercise={match.params.exercise} />
+                <InternalNotes quarter={match.params.quarter} exercise={match.params.exercise} classes={classes} ticket={ticket}/>
+              </div>
             </Paper>
       </div>
     </div>

@@ -51,13 +51,13 @@ const classes = {
 
 
 
-const Info = ({classes, ticket}) => {
+const Info = ({classes, ticket, exercise}) => {
 
   return (
     <div>
-        <TicketHeader classes = {classes} ticket= {ticket} />
-        <StudentInfo classes = {classes} ticket={ticket} />
-        <TicketInfo classes = {classes} ticket={ticket}/>
+        <TicketHeader exerciseProp={exercise} classes ={classes} ticket={ticket} />
+        <StudentInfo classes={classes} ticket={ticket} />
+        <TicketInfo classes={classes} ticket={ticket}/>
     </div>
 
   )

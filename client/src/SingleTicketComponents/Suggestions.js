@@ -45,20 +45,17 @@ const classes = {
 
 const Suggestions = ({classes, ticket}) => {
 
+  const [suggestions, setSuggestions] = useState([]);
 
-  const [sug0, setSug0] = useState("...")
-  const [sug1, setSug1] = useState("...")
 
-  // TODO: Map the suggestions properly instead of naïvely assuming that there will be only two
-
-  const getSuggestions = () =>
+  const getSuggestions = (ticket) =>
   {
-    setSug0(ReactHtmlParser(ticket['response']['0']));
-    setSug1(ReactHtmlParser(ticket['response']['1']));
+    setSuggestions(ticket["response"]);
+
   }
   useEffect(() =>
   {
-    getSuggestions();
+    getSuggestions(ticket);
   },[ticket]);
 
   return (
@@ -72,20 +69,20 @@ const Suggestions = ({classes, ticket}) => {
       </div>
       <div className={classes.allSuggestions}>
         <List>
+          {
+            suggestions ?
+            suggestions.map((sug) => {
+              return(
                 <Paper className={classes.suggestionPaper} elevation = {2}>
                   <ListItem>
-                    <ListItemText
-                      primary={sug0}
-                      />
-                    </ListItem>
+                    <ListItemText primary={ ReactHtmlParser(sug) } />
+                  </ListItem>
                 </Paper>
-                <Paper className={classes.suggestionPaper} elevation = {2}>
-                    <ListItem>
-                      <ListItemText
-                        primary={sug1}
-                      />
-                      </ListItem>
-                </Paper>
+              );
+            })
+            :
+            <div></div>
+          }
         </List>
       </div>
 

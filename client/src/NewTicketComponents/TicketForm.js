@@ -80,6 +80,7 @@ const TicketForm = ({ classes }) => {
       source: exercises[selectedIndex],
       textBlocks: textBlocks,
       category: "Error",
+      status: "Unread"
     };
     const response = await fetch('https://secure-oasis-87770.herokuapp.com/api/form', {
       method: 'POST',
@@ -93,9 +94,11 @@ const TicketForm = ({ classes }) => {
     console.log("myJson ====> ", myJson);
     let d = new Date();
     myJson["date"] = d.getTime();
+    myJson["status"] = "Unread";
     let database = firebase.database();
     database.ref('winter2019/' + exercises[selectedIndex] + '/tickets').push(myJson);
-
+    alert("Ticket submitted.");
+    //window.location.href = "/newticket/";
 
   }
 
@@ -174,7 +177,7 @@ const TicketForm = ({ classes }) => {
       <div className={classes.titleDiv}>
         <TextField
           id="outlined-full-width"
-          label="Describe your problem"
+          label="Problem Description"
           className={classes.titleField}
           value={message}
           onChange={({target}) => setMessage(target.value)}
@@ -189,6 +192,8 @@ const TicketForm = ({ classes }) => {
       </div>
       <div className={classes.titleDiv}>
       <Button
+        variant="contained"
+        color="primary"
         aria-owns={anchorEl ? 'simple-menu' : undefined}
         aria-haspopup="true"
         onClick={handleClick}

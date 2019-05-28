@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/styles';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import { firebase } from '../firebaseConfig';
+import ReactHtmlParser from 'react-html-parser';
 
 const classes = {
   root: {
@@ -22,16 +23,18 @@ const classes = {
   typography: {
 
   },
-  suggestionsDiv: {
+  notesDiv: {
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '10px',
   },
-  suggestionPaper: {
-    marginTop: '5px',
+  notePaperDiv: {
+    marginBottom: '10px',
+
+
   },
-  allSuggestions: {
+  allnotes: {
 
   },
   typographyDiv: {
@@ -61,159 +64,138 @@ const classes = {
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '2%',
-    border: '2px solid red',
-
   },
-
-  toField: {
-    position: 'relative',
-    width: '100%',
-        marginTop: '10px',
-
-  },
-
-  subjectField: {
-    position: 'relative',
-    marginTop: '10px',
-    width: '100%',
-
-  },
-
   bodyField: {
     position: 'relative',
-    marginTop: '10px',
-    width: '100%',
-
+    width: '100%'
   },
-
+  newMessageDiv: {
+    position: 'absolute',
+    bottom: '20px',
+    width: '90%'
+  },
+  button: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '2%',
+    marginTop: '5px'
+  }
 };
 
-const styles = makeStyles({
-  wrapper: {
-    background: "linear-gradient(to bottom, rgba(240,249,255,1)  0%,rgba(203,235,255,1) 47%,rgba(161,219,255,1) 100%)",
-    height: '1000px',
-    width: '100%',
-  },
-  app: {
-    fontFamily: 'Roboto',
-    height: '100%',
-  },
-  appbarwrapper: {
-    width: '60%',
-  },
-  appbar: {
 
-  },
-  toolbar: {
-
-  },
-  list: {
-    width: '60%',
-  },
-  ticketinfo: {
-    display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 50px',
-  },
-  links: {
-    color: 'black',
-    textDecoration: 'none',
-  },
-});
-
-
-const InternalNotes = ({classes, ticket}) => {
-  const [isModalOpen, toggleModal] = useState(false)
+const InternalNotes = ({exercise, classes, ticket, quarter}) => {
+  const [isModalOpen, toggleModal] = useState(false);
+  const [newNote, updateNewNote] = useState('');
 
   const handleModal = () => {
     toggleModal(!isModalOpen);
-    console.log(isModalOpen);
   };
+  const handleSubmit = () => {
+    const database = firebase.database();
+    const ref = database.ref(`${quarter}/${exercise}/notes`);
+    const fullNote = {
+      "note": "0",
+      "message": newNote,
+    };
+    ref.push(fullNote);
+    updateNewNote('');
+  }
 
   return (
     <div>
       <div className={classes.openModalBtn}>
         <Button onClick={handleModal} variant="contained" color="primary" className={classes.openModalBtn}>See Notes</Button>
       </div>
-
-
-
-    <Modal
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      open= {isModalOpen}
-      onClose={handleModal}
-    >
-      <Paper className={classes.emailForm}>
-
-
-      </Paper>
-    </Modal>
-
-  </div>
-
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open= {isModalOpen}
+        onClose={handleModal}
+      >
+        <Paper className={classes.emailForm}>
+          <div className={classes.emailDiv}>
+            <Typography variant="h5" className={classes.typography}>
+              Notes for {exercise}:
+            </Typography>
+            <NotesView quarter={quarter} exercise={exercise} classes={classes}/>
+            <div className={classes.newMessageDiv}>
+              <TextField
+                id="outlined-multiline-static"
+                label="Body:"
+                multiline
+                rows="3"
+                defaultValue=""
+                value={newNote}
+                className={classes.bodyField}
+                onChange={({target}) => updateNewNote(target.value)}
+                variant="outlined"
+              />
+              <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Add Note</Button>
+            </div>
+          </div>
+        </Paper>
+      </Modal>
+    </div>
   )
 };
 
-const Note = ({notes, styles}) => {
-  const stylesheet = styles();
-  const NoteListItems = notes.map(note =>
-  <ListItemText><a className = {stylesheet.links} href={'/winter2019/exercise1/notes/' + note["note"]}><div className={stylesheet.ticketinfo}><b>{note["message"]}    <br /> </b> </div></a></ListItemText>
-  );
-  console.log(NoteListItems);
+const Note = ({notes, classes}) => {
   return(
-    <List className={stylesheet.list}>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Note</p><p>Message</p></div></ListItemText>
-      {NoteListItems}
-    </List>
+    <div>
+      {
+        notes.map((note) => {
+          return(
+            <div className={classes.notePaperDiv}>
+            <Paper className={classes.notePaper} elevation = {2}>
+              <ListItem>
+                <ListItemText
+                  primary={note["message"]}
+                  />
+                </ListItem>
+            </Paper>
+            </div>
+          );
+        })
+      }
+    </div>
   );
 }
 
-const NotesView = () => {
-  const stylesheet = styles();
-
-  const debugger_note = [
-    {
-      "note": "0",
-      "message": "test",
-    }
-  ];
+const NotesView = ({quarter, exercise, classes}) => {
 
   const [notes, updateNotes] = useState([]);
 
   useEffect(() => {
     const getData = () => {
       const database = firebase.database();
-      const dbref = database.ref('/winter2019/exercise1/notes/');
+      const dbref = database.ref(`${quarter}/${exercise}/notes`);
       dbref.on('value', (snapshot) => {
-        const db = snapshot.val();
-        console.log(db);
-        const keys = Object.keys(db).filter(k => !isNaN(Number(k)));
-        const blankNote = {
-          "note": "0",
-          "message": "",
-        };
+        if (snapshot.val()) {
+          const db = snapshot.val();
+          const keys = Object.keys(db);
 
-        const new_notes = keys.map(n => {
-          const nt = JSON.parse(JSON.stringify(blankNote));
-          nt["note"] = n;
-          nt["message"] = db[n]["message"];
-          console.log(nt)
-          return nt;
-        });
-        updateNotes(new_notes);
+          const blankNote = {
+            "note": "0",
+            "message": "",
+          };
+
+          const new_notes = keys.map(n => {
+            const nt = JSON.parse(JSON.stringify(blankNote));
+            nt["note"] = n;
+            nt["message"] = db[n]["message"];
+            return nt;
+          });
+          updateNotes(new_notes);
+        }
       });
+
     }
+
     getData();
   }, []);
 
   return(
-  <div className={stylesheet.wrapper}>
-    <div className={stylesheet.app}>
-      <center>
-        <Note styles={styles} notes = {notes} />
-      </center>
-    </div>
-  </div>
+    <Note notes={notes} classes={classes} />
   );
 }
 
