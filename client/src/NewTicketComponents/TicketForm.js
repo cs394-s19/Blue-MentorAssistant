@@ -94,10 +94,11 @@ const TicketForm = ({ classes }) => {
     console.log("myJson ====> ", myJson);
     let d = new Date();
     myJson["date"] = d.getTime();
+    myJson["status"] = "Unread";
     let database = firebase.database();
     database.ref('winter2019/' + exercises[selectedIndex] + '/tickets').push(myJson);
     alert("Ticket submitted.");
-    window.location.href = "/newticket/";
+    //window.location.href = "/newticket/";
 
   }
 

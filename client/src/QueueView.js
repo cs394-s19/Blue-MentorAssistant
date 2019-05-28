@@ -72,6 +72,40 @@ const QueueHeader = ({styles}) => {
 
 const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
+  const [sort, setSort] = useState([1, 0]);
+  const [ticketsState, setTickets] = useState([]);
+
+  useEffect(() => {
+    setTickets(tickets);
+    console.log(ticketsState);
+  }, [tickets]);
+  
+  const sortDateRecent = (a, b) => {
+    return a["date"] - b["date"];
+  }
+
+  const sortDateOldest = (a, b) => {
+    return b["date"] - a["date"];
+  }
+
+  const handleDateClick = () => {
+    console.log("clicked");
+    let sortCopy = sort;
+    let ticketsCopy = ticketsState;
+    if (!sortCopy[1]) {
+      if (!sortCopy[0]) {
+        ticketsCopy.sort(sortDateRecent);
+        setTickets(ticketsCopy);
+        setSort([1, 0]);
+      }
+      else {
+        ticketsCopy.sort(sortDateOldest);
+        setTickets(ticketsCopy);
+        setSort([0, 0])
+      }
+    }
+  }
+
   const removeTrailingZero = (x) => {
     if((!isNaN(Number(x)))&&(x.substring(0,1) === '0')) {
       return x.substring(1);
@@ -89,23 +123,22 @@ const Queue = ({tickets, styles}) => {
     const day = removeTrailingZero(iso.substring(5,7));
     return day + "/" + month + "/" + year;
   }
-  const QueueListItems = tickets.map(ticket => {
+  const QueueListItems = ticketsState.map(ticket => {
     // if (ticket['status'] !== 'Completed')
       return(
   
-          <ListItem button>
+          <ListItem button divider>
           <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
           </ListItem>
 
         );
     }
   );
-  //console.log(QueueListItems);
   return(
     <Paper className={stylesheet.listPaper}>
     <List className={stylesheet.list}>
-      <ListItem button disabled>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p>Date</p><p>Status</p></div></ListItemText>
+      <ListItem divider>
+        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p onClick={handleDateClick}>Date</p><p>Status</p></div></ListItemText>
       </ListItem>
       {QueueListItems}
     </List>
