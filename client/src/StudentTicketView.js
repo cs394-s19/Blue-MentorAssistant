@@ -62,12 +62,12 @@ const dummyTicket = {
              1: "..."},
   student: {id: "0",
             name: "..."},
-  textBlocks: {0: {label: "...",
+  textBlocks: [{label: "...",
                    text: "...",
                    type: "..."},
-               1: {label: "...",
+               {label: "...",
                    text: "...",
-                   type: "..."}}
+                   type: "..."}]
 };
 
 
