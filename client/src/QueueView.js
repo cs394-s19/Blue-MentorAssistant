@@ -60,9 +60,6 @@ const QueueHeader = ({styles}) => {
     <div className={stylesheet.appbarwrapper}>
       <AppBar className={stylesheet.appbar} position="sticky" color="primary">
         <Toolbar className={stylesheet.toolbar}>
-          <IconButton onClick={handleBackBtn} className={stylesheet.backButton} color="inherit" aria-label="back">
-            <ArrowBack />
-          </IconButton>
           <h3>Mentor's Assistant | Queue | Winter 2019</h3>
         </Toolbar>
       </AppBar>
@@ -80,7 +77,7 @@ const Queue = ({tickets, styles}) => {
     setTickets(tickets);
     console.log(ticketsState);
   }, [tickets]);
-  
+
   const sortDateRecent = (a, b) => {
     return a["date"] - b["date"];
   }
@@ -124,7 +121,7 @@ const Queue = ({tickets, styles}) => {
     const day = removeTrailingZero(iso.substring(5,7));
     return day + "/" + month + "/" + year;
   }
-  
+
   const getTimeString = (t) => {
     let date = new Date(t);
     let hours = ConvertNumberToTwoDigitString(date.getHours());
@@ -164,7 +161,7 @@ const Queue = ({tickets, styles}) => {
         );
       }
     }
-      
+
     }
   );
   return(
@@ -183,7 +180,7 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = [
-      { 
+      {
         "ticket": "0",
         "date": "",
         "exercise": "",
