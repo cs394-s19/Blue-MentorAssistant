@@ -65,10 +65,6 @@ const TicketHeader = ({
       handleSave();
     }
 
-    const handleSelectChange = (e) => {
-      setStatus(e.target.value);
-    }
-
     const GetTicketHeader = () => {
       setTitle(ticket['message']);
       setSubmitDate(getDateString(date));

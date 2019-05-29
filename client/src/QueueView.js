@@ -53,9 +53,7 @@ const styles = makeStyles({
 
 const QueueHeader = ({styles}) => {
   const stylesheet = styles();
-  const handleBackBtn = () => {
-    window.history.back();
-  }
+
   return(
     <div className={stylesheet.appbarwrapper}>
       <AppBar className={stylesheet.appbar} position="sticky" color="primary">
