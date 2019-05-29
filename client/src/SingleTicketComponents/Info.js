@@ -68,7 +68,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
   //ticket header
   const [title, setTitle] = useState(ticket["message"]);
   const [exercise, setExercise] = useState(exercis);
-  const [submitDate, setSubmitDate] = useState(ticket["date"]);
+  const [submitDate, setSubmitDate] = useState(getDateString(ticket["date"]));
   const [status, setStatus] = useState(0);
 
   //student info

@@ -71,7 +71,7 @@ const TicketHeader = ({
 
     const GetTicketHeader = () => {
       setTitle(ticket['message']);
-      setSubmitDate(getDateString(ticket['date']));
+      setSubmitDate(getDateString(date));
       setSubmitTime(getTimeString(ticket['date']));
       setExercise(exerciseProp);
 
@@ -81,9 +81,14 @@ const TicketHeader = ({
       console.log(date);
       if (isNaN(Number(date))) {
         console.log("queue view error: incorrect date string");
-      }
         return "";
       }
+      const iso = new Date(Number(date)).toISOString();
+      const year = iso.substring(0,4);
+      const day = (iso.substring(8,10));
+      const month = (iso.substring(5,7));
+      return year+'-' + month+ '-'+day;
+    }
 
       const getTimeString = (t) => {
         let date = new Date(t);
