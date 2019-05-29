@@ -13,6 +13,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { firebase } from './firebaseConfig';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 
 const styles = makeStyles({
@@ -40,10 +41,9 @@ const styles = makeStyles({
   listPaper: {
     width: '70%',
   },
-
   ticketinfo: {
     display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 150px 50px',
+    gridTemplateColumns: '450px 170px 150px 150px 150px 100px',
   },
   links: {
     color: 'black',
@@ -74,6 +74,7 @@ const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
   const [sort, setSort] = useState([1, 0]);
   const [ticketsState, setTickets] = useState([]);
+  const [showCompleted, toggleCompleted] = useState(false);
 
   useEffect(() => {
     setTickets(tickets);
@@ -143,23 +144,34 @@ const Queue = ({tickets, styles}) => {
 
   const ConvertNumberToTwoDigitString = (n) => {
     return n > 9 ? "" + n : "0" + n;
-}
+  }
   const QueueListItems = ticketsState.map(ticket => {
-    // if (ticket['status'] !== 'Completed')
+    if (showCompleted) {
       return(
-  
+        <ListItem button divider>
+        <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{getTimeString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+        </ListItem>
+
+      );
+    }
+    else {
+      if (ticket["status"] !== "Completed"){
+        return(
           <ListItem button divider>
           <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{getTimeString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
           </ListItem>
 
         );
+      }
+    }
+      
     }
   );
   return(
     <Paper className={stylesheet.listPaper}>
     <List className={stylesheet.list}>
       <ListItem divider>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p onClick={handleDateClick}>Date</p><p>Time</p><p>Status</p></div></ListItemText>
+        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><Button style={{width: '50px'}} onClick={handleDateClick}>Date</Button><p>Time</p><p>Status</p><Button color="primary" onClick={()=>toggleCompleted(!showCompleted)}>Show Completed</Button></div></ListItemText>
       </ListItem>
       {QueueListItems}
     </List>
