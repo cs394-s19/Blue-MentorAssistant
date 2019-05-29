@@ -11,7 +11,7 @@ const classes = {
 
 
 const TicketInfo = ({classes, ticket}) => {
-  const [blocks, setBlocks] = useState([]);
+  const [blocks, setBlocks] = useState(["no u"]);
 
   console.log(blocks);
   const getTicketInfo = () =>
@@ -28,6 +28,7 @@ const TicketInfo = ({classes, ticket}) => {
   }
   useEffect(() => {
     getTicketInfo();
+    console.log("blocks:" + blocks)
   },[ticket]);
 
   const convertType = (type) => {

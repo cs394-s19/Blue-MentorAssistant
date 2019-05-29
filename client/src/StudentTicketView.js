@@ -7,8 +7,9 @@ import Suggestions from './SingleTicketComponents/Suggestions';
 import Footer from './SingleTicketComponents/Footer';
 import {getTicket} from './databaseHelpers';
 import StudentViewInfo from './StudentTicketViewComponents/StudentViewInfo';
-
+import ChatPane from './ChatComponents/ChatPane';
 import { firebase } from './firebaseConfig';
+import UserTypes from './enums/UserTypes';
 
 const classes = {
   App: {
@@ -75,11 +76,17 @@ const classesMS = makeStyles(classes);
 
 const StudentTicketView = ({match}) => {
   const [ticket, setTicket] = useState(dummyTicket)
+  console.log('/' + match.params.quarter + '/' + match.params.exercise + '/tickets/' + match.params.id + '/');
   const getTicket = () =>
   {
     const database = firebase.database();
-    const ticketRef = database.ref(match.params.id);
+
+    const quarter = match.params.quarter;
+    const exercise = match.params.exercise;
+
+    const ticketRef = database.ref('/' + quarter + '/' + exercise + '/tickets/' + match.params.id + '/');
      ticketRef.once('value').then((snapshot) => {
+      console.log(snapshot.val());
       setTicket(snapshot.val());
     });
   }
@@ -95,6 +102,7 @@ const StudentTicketView = ({match}) => {
       <div className = {CSS_classes.App}>
             <Paper className = {CSS_classes.paper} elevation = {6}>
               <StudentViewInfo classes = {classes} ticket = {ticket} />
+              <ChatPane ticket={ticket} match={match} userType={UserTypes.STUDENT} />
             </Paper>
       </div>
     </div>

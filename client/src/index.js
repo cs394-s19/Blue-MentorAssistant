@@ -21,7 +21,7 @@ const routing = (
       <Route path="/queue/" component={QueueView} />
       <Route exact path="/" component={Home} />
       <Route exact path="/newticket/" component={NewTicket} />
-      <Route path="/ticket/:id/studentView" component={StudentTicketView}/>
+      <Route path="/ticket/:quarter/:exercise/:id/studentView" component={StudentTicketView}/>
       <Route path="/notes/" component={NotesView} />
     </div>
   </Router>
