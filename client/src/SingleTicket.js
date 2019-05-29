@@ -8,7 +8,7 @@ import Footer from './SingleTicketComponents/Footer';
 import InternalNotes from './SingleTicketComponents/InternalNotes';
 import {getTicket} from './databaseHelpers';
 import { firebase } from './firebaseConfig';
-
+import ChatPane from './ChatComponents/ChatPane';
 const classes = {
   App: {
     overflowY: 'scroll',
@@ -111,6 +111,7 @@ const SingleTicket = ({match}) => {
                 <Footer classes={classes} ticket={ticket} id={match.params.id} quarter={match.params.quarter} exercise={match.params.exercise} />
                 <InternalNotes quarter={match.params.quarter} exercise={match.params.exercise} classes={classes} ticket={ticket}/>
               </div>
+              <ChatPane ticket={ticket} match={match} />
             </Paper>
       </div>
     </div>
