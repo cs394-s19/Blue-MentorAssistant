@@ -25,38 +25,49 @@ const classes = {
 
 
 
-const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
-  const [title, setTitle] = useState("...");
-  const [exercise, setExercise] = useState("...");
-  const [submitDate, setSubmitDate] = useState("...")
+const TicketHeader = ({date, classes, ticket, userType, exerciseProp, handleSave, title, setTitle, exercise, setExercise, submitDate, setSubmitDate, status, setStatus}) => {
 
-  const GetTicketHeader = () =>
-  {
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  }
 
+  const handleDateChange = (e) => {
+    setSubmitDate(e.target.value);
+  }
+
+  const handleSaveBtn = () => {
+    handleSave();
+  }
+
+  const handleSelectChange = (e) => {
+    setStatus(e.target.value);
+  }
+
+  const GetTicketHeader = () => {
     setTitle(ticket['message']);
-    setSubmitDate(getDateString(ticket['date']));
+    setSubmitDate(getDateString(date));
     setExercise(exerciseProp);
 
   }
 
   const getDateString = (date) => {
-      if(isNaN(Number(date))){
-        console.log("queue view error: incorrect date string");
-        return "";
-      }
-      const iso = new Date(Number(date)).toISOString();
-      const year = iso.substring(0,4);
-      const day = (iso.substring(8,10));
-      const month = (iso.substring(5,7));
-      return year+'-' + month+ '-'+day;
+    console.log(date);
+    if(isNaN(Number(date))) {
+      console.log("queue view error: incorrect date string");
+      return "";
     }
+    const iso = new Date(Number(date)).toISOString();
+    const year = iso.substring(0,4);
+    const day = (iso.substring(8,10));
+    const month = (iso.substring(5,7));
+    return year+'-' + month+ '-'+day;
+  }
 
 
-  useEffect(() =>
-  {
-
+  useEffect(() => {
     GetTicketHeader();
   },[ticket]);
+
   return (
     <div>
       <AppBar position="static">
@@ -69,7 +80,7 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
              <Typography variant="h6" color="inherit" className={classes.grow}>
               Ticket
              </Typography>
-             <Button color="inherit">Save</Button>
+             <Button onClick={handleSaveBtn} color="inherit">Save</Button>
            </Toolbar>
          </AppBar>
 
@@ -99,7 +110,7 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
             value={title}
             margin="normal"
             variant="outlined"
-
+            onChange={handleTitleChange}
           />
       </div>
 
@@ -109,8 +120,8 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
            Status
            </InputLabel>
             <Select
-                    value={0}
-
+                    value={status}
+                    onChange={handleSelectChange}
                     input={<OutlinedInput
                       name="age"
                       id="age-label-placeholder"
@@ -127,12 +138,12 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
                id="date"
                label="Date Submitted"
                type="date"
-               defaultValue={submitDate}
                value={submitDate}
                className={classes.textField}
                InputLabelProps={{
                  shrink: true,
                }}
+                onChange={handleDateChange}
                 variant="outlined"
              />
         </FormControl>

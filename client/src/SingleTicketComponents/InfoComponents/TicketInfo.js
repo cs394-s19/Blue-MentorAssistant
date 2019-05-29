@@ -10,28 +10,24 @@ const classes = {
 
 
 
-const TicketInfo = ({classes, ticket}) => {
-  const [blocks, setBlocks] = useState([]);
-
-  console.log(blocks);
-  const getTicketInfo = () =>
-  {
-
-
-   // console.log(ticket);
-    console.log(ticket["textBlocks"]);
+const TicketInfo = ({classes, ticket, blocks, setBlocks}) => {
+  //console.log(blocks);
+  const getTicketInfo = () => {
+    //console.log(ticket["textBlocks"]);
     setBlocks(ticket["textBlocks"]);
-
-    // setCode(ticket['textBlocks']['0']['text']);
-    // setOutput(ticket['textBlocks']['1']['text']);
-
   }
   useEffect(() => {
     getTicketInfo();
   },[ticket]);
 
+  const handleBlockChange = (e, idx) => {
+    const newBlocks = JSON.parse(JSON.stringify(blocks));
+    newBlocks[Number(idx)]["text"] = e.target.value;
+    setBlocks(newBlocks);
+  }
+
   const convertType = (type) => {
-    console.log(type);
+    //console.log(type);
     switch (type)  {
       case "computerOutput":
         return "Output";
@@ -43,20 +39,22 @@ const TicketInfo = ({classes, ticket}) => {
         return type;
     }
   }
+
   return (
     <div>
       {
         blocks ?
-        blocks.map((block) => {
+        blocks.map((block, idx) => {
           return(
               <div className={classes.titleDiv}>
               <TextField
-                    id="outlined-multiline-static"
+                    id={idx.toString()}
                     label={block["type"] ? convertType(block["type"]) : "       "}
                     multiline
                     rows="10"
                     defaultValue=""
                     value={block["text"]}
+                    onChange={(e) => handleBlockChange(e, idx.toString())}
                     className={classes.codeField}
                     variant="outlined"
                   />

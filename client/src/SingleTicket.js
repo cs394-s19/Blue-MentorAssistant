@@ -105,7 +105,7 @@ const SingleTicket = ({match}) => {
     <div className={CSS_classes.AppWrapper}>
       <div className = {CSS_classes.App}>
             <Paper className={CSS_classes.paper} elevation={6}>
-              <Info exercise={match.params.exercise} classes={classes} ticket={ticket} />
+              <Info quarter={match.params.quarter} id={match.params.id} exercis={match.params.exercise} classes={classes} ticket={ticket} />
               <Suggestions classes={classes} ticket={ticket} />
               <div className={CSS_classes.flexBox} >  
                 <Footer classes={classes} ticket={ticket} id={match.params.id} quarter={match.params.quarter} exercise={match.params.exercise} />

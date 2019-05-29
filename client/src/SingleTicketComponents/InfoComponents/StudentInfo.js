@@ -9,10 +9,7 @@ const classes = {
 
 
 
-const StudentInfo = ({classes, ticket}) => {
-  const [name, setName] = useState("...");
-  const [netID, setNetID] = useState("...")
-  const [email, setEmail] = useState("...")
+const StudentInfo = ({classes, ticket, name, setName, netID, setNetID, email, setEmail}) => {
 
   const getStudentInfo = () =>
   {
@@ -26,7 +23,17 @@ const StudentInfo = ({classes, ticket}) => {
     getStudentInfo();
   }, [ticket]);
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  }
 
+  const handleNetIDChange = (e) => {
+    setNetID(e.target.value);
+  }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  }
 
   return (
     <div>
@@ -36,6 +43,7 @@ const StudentInfo = ({classes, ticket}) => {
                label="NetID"
                className={classes.statusField}
                value={netID}
+               onChange={handleNetIDChange}
                margin="normal"
                variant="outlined"
              />
@@ -45,7 +53,7 @@ const StudentInfo = ({classes, ticket}) => {
                   label="Name"
                   className={classes.statusField}
                   value={name}
-
+                  onChange={handleNameChange}
                   margin="normal"
                   variant="outlined"
                 />
@@ -55,8 +63,8 @@ const StudentInfo = ({classes, ticket}) => {
             id="outlined-full-width"
             label="Email"
             className={classes.titleField}
-
-            value="VictorAung2021@u.northwestern.edu"
+            onChange={handleEmailChange}
+            value={email}
 
             margin="normal"
             variant="outlined"
