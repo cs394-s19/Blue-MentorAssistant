@@ -52,7 +52,7 @@ const TicketHeader = ({
     status,
     setStatus
   }) => {
-
+    const [submitTime, setSubmitTime] = useState(ticket["date"]);
     const handleTitleChange = (e) => {
       setTitle(e.target.value);
     }
@@ -81,6 +81,7 @@ const TicketHeader = ({
       console.log(date);
       if (isNaN(Number(date))) {
         console.log("queue view error: incorrect date string");
+      }
         return "";
       }
 
@@ -108,53 +109,43 @@ const TicketHeader = ({
         GetTicketHeader();
       }, [ticket]);
 
-      return ( <
-        div >
-        <
-        AppBar position = "static" >
-        <
-        Toolbar >
-        <
-        IconButton className = {
+      return ( 
+        <div>
+        <AppBar position = "static" >
+        <Toolbar >
+        <IconButton className = {
           classes.menuButton
         }
         color = "inherit"
-        aria - label = "Menu" >
-        <
-        Link to = "/queue/"
+        aria-label = "Menu" >
+        <Link to = "/queue/"
         style = {
           {
             textDecoration: 'none',
             color: 'white'
           }
         } >
-        <
-        ArrowBack / >
-        <
-        /Link> <
-        /IconButton> <
-        Typography variant = "h6"
+        <ArrowBack / >
+        </Link> </IconButton> 
+        <Typography variant = "h6"
         color = "inherit"
         className = {
           classes.grow
         } >
-        Ticket <
-        /Typography> <
-        Button onClick = {
+        Ticket </Typography> <Button onClick = {
           handleSaveBtn
         }
-        color = "inherit" > Save < /Button> <
-        /Toolbar> <
-        /AppBar>
+        color = "inherit" > Save 
+        </Button> 
+        </Toolbar> 
+        </AppBar>
 
-        <
-        div className = {
+        <div className = {
           classes.titleDiv
         } >
 
 
-        <
-        TextField id = "filled-exercise"
+        <TextField id = "filled-exercise"
         label = "Exercise"
         className = {
           classes.titleField
@@ -166,19 +157,15 @@ const TicketHeader = ({
         margin = "normal"
         variant = "outlined"
 
-        /
-        >
-        <
-        /div>
+        />
+        </div>
 
-        <
-        div className = {
+        <div className = {
           classes.titleDiv
         } >
 
 
-        <
-        TextField id = "filled-name"
+        <TextField id = "filled-name"
         label = "Title"
         className = {
           classes.titleField
@@ -191,12 +178,10 @@ const TicketHeader = ({
         variant = "outlined"
         onChange = {
           handleTitleChange
-        }
-        /> <
-        /div>
+        }/> 
+        </div>
 
-        <
-        div className = {
+        <div className = {
           classes.statusDiv
         } > {
           /* <FormControl className={classes.formControl} variant="outlined">
@@ -218,12 +203,10 @@ const TicketHeader = ({
                   </FormControl> */
         }
 
-        <
-        FormControl className = {
+        <FormControl className = {
           classes.formControl
         } >
-        <
-        TextField id = "date"
+        <TextField id = "date"
         label = "Time Submitted"
         defaultValue = {
           submitTime
@@ -241,16 +224,13 @@ const TicketHeader = ({
         }
         variant = "outlined" /
         >
-        <
-        /FormControl>
+        </FormControl>
 
 
-        <
-        FormControl className = {
+        <FormControl className = {
           classes.formControl
         } >
-        <
-        TextField id = "date"
+        <TextField id = "date"
         label = "Date Submitted"
         type = "date"
         value = {
@@ -269,10 +249,9 @@ const TicketHeader = ({
         }
         variant = "outlined" /
         >
-        <
-        /FormControl> <
-        /div> <
-        /div>
+        </FormControl> 
+        </div> 
+        </div>
 
       )
     };
