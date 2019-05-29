@@ -69,7 +69,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
   const [title, setTitle] = useState(ticket["message"]);
   const [exercise, setExercise] = useState(exercis);
   const [submitDate, setSubmitDate] = useState(getDateString(ticket["date"]));
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState("Opened");
 
   //student info
   const [name, setName] = useState(ticket["student"]["name"]);
