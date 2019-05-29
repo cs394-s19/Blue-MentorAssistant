@@ -13,6 +13,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import { firebase } from './firebaseConfig';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 
 const styles = makeStyles({
@@ -26,7 +27,7 @@ const styles = makeStyles({
     height: '100%',
   },
   appbarwrapper: {
-    width: '60%',
+    width: '70%',
   },
   appbar: {
 
@@ -38,12 +39,11 @@ const styles = makeStyles({
     width: '100%',
   },
   listPaper: {
-    width: '60%',
+    width: '70%',
   },
-
   ticketinfo: {
     display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 50px',
+    gridTemplateColumns: '450px 170px 150px 150px 150px 100px',
   },
   links: {
     color: 'black',
@@ -60,9 +60,6 @@ const QueueHeader = ({styles}) => {
     <div className={stylesheet.appbarwrapper}>
       <AppBar className={stylesheet.appbar} position="sticky" color="primary">
         <Toolbar className={stylesheet.toolbar}>
-          <IconButton onClick={handleBackBtn} className={stylesheet.backButton} color="inherit" aria-label="back">
-            <ArrowBack />
-          </IconButton>
           <h3>Mentor's Assistant | Queue | Winter 2019</h3>
         </Toolbar>
       </AppBar>
@@ -74,12 +71,13 @@ const Queue = ({tickets, styles}) => {
   const stylesheet = styles();
   const [sort, setSort] = useState([1, 0]);
   const [ticketsState, setTickets] = useState([]);
+  const [showCompleted, toggleCompleted] = useState(false);
 
   useEffect(() => {
     setTickets(tickets);
     console.log(ticketsState);
   }, [tickets]);
-  
+
   const sortDateRecent = (a, b) => {
     return a["date"] - b["date"];
   }
@@ -123,22 +121,54 @@ const Queue = ({tickets, styles}) => {
     const day = removeTrailingZero(iso.substring(5,7));
     return day + "/" + month + "/" + year;
   }
+
+  const getTimeString = (t) => {
+    let date = new Date(t);
+    let hours = ConvertNumberToTwoDigitString(date.getHours());
+    let minutes = ConvertNumberToTwoDigitString(date.getMinutes());
+    let ampm = "";
+    if (parseInt(hours) >= 12) {
+      ampm = " pm";
+      hours = (parseInt(hours) === 12) ? "12" : (parseInt(hours)-12).toString();
+    }
+    else {
+      ampm = " am";
+    }
+    let time = hours + ":" + minutes + ampm;
+    console.log(time);
+    return time;
+  }
+
+  const ConvertNumberToTwoDigitString = (n) => {
+    return n > 9 ? "" + n : "0" + n;
+  }
   const QueueListItems = ticketsState.map(ticket => {
-    // if (ticket['status'] !== 'Completed')
+    if (showCompleted) {
       return(
-  
+        <ListItem button divider>
+        <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{getTimeString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+        </ListItem>
+
+      );
+    }
+    else {
+      if (ticket["status"] !== "Completed"){
+        return(
           <ListItem button divider>
-          <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+          <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{getTimeString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
           </ListItem>
 
         );
+      }
+    }
+
     }
   );
   return(
     <Paper className={stylesheet.listPaper}>
     <List className={stylesheet.list}>
       <ListItem divider>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p onClick={handleDateClick}>Date</p><p>Status</p></div></ListItemText>
+        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><Button style={{width: '50px'}} onClick={handleDateClick}>Date</Button><p>Time</p><p>Status</p><Button color="primary" onClick={()=>toggleCompleted(!showCompleted)}>Show Completed</Button></div></ListItemText>
       </ListItem>
       {QueueListItems}
     </List>
@@ -150,7 +180,7 @@ const QueueView = () => {
   const stylesheet = styles();
   //debugging
   const debugger_tickets = [
-      { 
+      {
         "ticket": "0",
         "date": "",
         "exercise": "",
