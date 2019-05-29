@@ -26,7 +26,7 @@ const styles = makeStyles({
     height: '100%',
   },
   appbarwrapper: {
-    width: '60%',
+    width: '70%',
   },
   appbar: {
 
@@ -38,12 +38,12 @@ const styles = makeStyles({
     width: '100%',
   },
   listPaper: {
-    width: '60%',
+    width: '70%',
   },
 
   ticketinfo: {
     display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 50px',
+    gridTemplateColumns: '450px 170px 150px 150px 50px',
   },
   links: {
     color: 'black',
@@ -123,12 +123,33 @@ const Queue = ({tickets, styles}) => {
     const day = removeTrailingZero(iso.substring(5,7));
     return day + "/" + month + "/" + year;
   }
+  
+  const getTimeString = (t) => {
+    let date = new Date(t);
+    let hours = ConvertNumberToTwoDigitString(date.getHours());
+    let minutes = ConvertNumberToTwoDigitString(date.getMinutes());
+    let ampm = "";
+    if (parseInt(hours) >= 12) {
+      ampm = " pm";
+      hours = (parseInt(hours) === 12) ? "12" : (parseInt(hours)-12).toString();
+    }
+    else {
+      ampm = " am";
+    }
+    let time = hours + ":" + minutes + ampm;
+    console.log(time);
+    return time;
+  }
+
+  const ConvertNumberToTwoDigitString = (n) => {
+    return n > 9 ? "" + n : "0" + n;
+}
   const QueueListItems = ticketsState.map(ticket => {
     // if (ticket['status'] !== 'Completed')
       return(
   
           <ListItem button divider>
-          <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
+          <ListItemText><a className={stylesheet.links} href={'/ticket/'+ticket["quarter"]+"/"+ticket["exercise"]+"/"+ticket["ticket"]+"/"}><div className={stylesheet.ticketinfo}><b>{ticket["exercise"]} <br /> {ticket["message"]}</b> <p>{ticket["student_name"]}</p> <p>{getDateString(ticket["date"])}</p><p>{getTimeString(ticket["date"])}</p><p>{ticket["status"]}</p></div></a></ListItemText>
           </ListItem>
 
         );
@@ -138,7 +159,7 @@ const Queue = ({tickets, styles}) => {
     <Paper className={stylesheet.listPaper}>
     <List className={stylesheet.list}>
       <ListItem divider>
-        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p onClick={handleDateClick}>Date</p><p>Status</p></div></ListItemText>
+        <ListItemText><div className={stylesheet.ticketinfo}><p>Ticket</p><p>Name</p><p onClick={handleDateClick}>Date</p><p>Time</p><p>Status</p></div></ListItemText>
       </ListItem>
       {QueueListItems}
     </List>

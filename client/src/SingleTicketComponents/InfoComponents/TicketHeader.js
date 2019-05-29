@@ -28,13 +28,15 @@ const classes = {
 const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
   const [title, setTitle] = useState("...");
   const [exercise, setExercise] = useState("...");
-  const [submitDate, setSubmitDate] = useState("...")
+  const [submitDate, setSubmitDate] = useState("...");
+  const [submitTime, setSubmitTime] = useState("...");
 
   const GetTicketHeader = () =>
   {
 
     setTitle(ticket['message']);
     setSubmitDate(getDateString(ticket['date']));
+    setSubmitTime(getTimeString(ticket['date']));
     setExercise(exerciseProp);
 
   }
@@ -50,7 +52,27 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
       const month = (iso.substring(5,7));
       return year+'-' + month+ '-'+day;
     }
+  
+  const getTimeString = (t) => {
+    let date = new Date(t);
+    let hours = ConvertNumberToTwoDigitString(date.getHours());
+    let minutes = ConvertNumberToTwoDigitString(date.getMinutes());
+    let ampm = "";
+    if (parseInt(hours) >= 12) {
+      ampm = " pm";
+      hours = (parseInt(hours) === 12) ? "12" : (parseInt(hours)-12).toString();
+    }
+    else {
+      ampm = " am";
+    }
+    let time = hours + ":" + minutes + ampm;
+    console.log(time);
+    return time;
+  }
 
+  const ConvertNumberToTwoDigitString = (n) => {
+    return n > 9 ? "" + n : "0" + n;
+  }
 
   useEffect(() =>
   {
@@ -104,9 +126,9 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
       </div>
 
       <div className={classes.statusDiv}>
-       <FormControl className={classes.formControl} variant="outlined">
+       {/* <FormControl className={classes.formControl} variant="outlined">
            <InputLabel>
-           Status
+           Time Submitted
            </InputLabel>
             <Select
                     value={0}
@@ -120,7 +142,22 @@ const TicketHeader = ({classes, ticket, userType, exerciseProp}) => {
                     <MenuItem value={0}>Open</MenuItem>
                     <MenuItem value={1}>Completed</MenuItem>
             </Select>
+        </FormControl> */}
+
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="date"
+              label="Time Submitted"
+              defaultValue={submitTime}
+              value={submitTime}
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+            />
         </FormControl>
+
 
         <FormControl className={classes.formControl}>
              <TextField
