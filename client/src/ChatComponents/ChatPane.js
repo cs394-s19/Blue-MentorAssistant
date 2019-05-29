@@ -12,12 +12,13 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import Fab from '@material-ui/core/Fab';
 import { firebase } from '../firebaseConfig';
 import Paper from '@material-ui/core/Paper';
+import UserTypes from '../enums/UserTypes';
 
 // Volunteezy ClassChat
 
 const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
 {
-    const [messageList,setMessageList] = useState(["111","2222"]);
+    const [messageList,setMessageList] = useState([]);
     const [currentMessage, setCurrentMessage] = useState("");
     const getMessages = () =>
     {
@@ -27,15 +28,33 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
         {
             let messageStrings = []
             const msgs = snapshot.val();
+            if(msgs == null)
+            {
+                return;
+            }
             const messageKeys = Object.keys(msgs);
             console.log(messageKeys);
             console.log(msgs);
             messageKeys.map((key) => {
-                messageStrings.push(msgs[key]);
+                console.log(msgs[key])
+                messageStrings.push(renderUser(msgs[key]["userType"]) + " " + msgs[key]["message"]);
             });
+            console.log(messageStrings);
             setMessageList(messageStrings);
         })
          
+    }
+
+    const renderUser = (userType) =>
+    {
+        console.log("called");
+        switch(userType)
+        {
+            case UserTypes.STUDENT:
+                return "Student:"
+            case UserTypes.MENTOR:
+                return "Mentor:";
+        }
     }
 
     useEffect(() =>
@@ -45,16 +64,18 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
     let database = firebase.database();
     const sendMessage = (message) =>
     {
+        setCurrentMessage("");
         const messagesRef = database.ref('winter2019' + '/' + 'exercise1' + '/tickets/' +  match.params.id + '/userMessages/');
 
         console.log(messagesRef);
-        messagesRef.push(message);
+        messagesRef.push({userType:userType,message:message});
         messagesRef.on('value', (snapshot) =>
         {
             const db = snapshot.val();
             console.log(db);
         });
         console.log(message);
+
     }
     const updateCurrentMessage = (event) =>
     {
@@ -84,7 +105,7 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
                         shrink: true,
                     }}>
                 </TextField>
-                <Button onClick={() => sendMessage(currentMessage)}>
+                <Button size="Large"onClick={() => sendMessage(currentMessage)}>
                     Submit
                 </Button>
                 </form>
