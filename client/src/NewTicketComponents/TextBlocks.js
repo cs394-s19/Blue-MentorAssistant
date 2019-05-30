@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import CancelIcon from '@material-ui/icons/Cancel';
 import Fab from '@material-ui/core/Fab';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -25,13 +25,22 @@ const classes = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%',
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
+  
 
 
   },
+
+  pairTextDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    border: '1px solid blue',
+    width: '90%',
+
+  },
+
   inputPaper: {
     display: 'flex',
     flexDirection: 'row',
@@ -43,14 +52,15 @@ const classes = {
 
   },
   addButton: {
-
+    marginRight: '2%',
+    marginTop: '20px',
     float: 'right',
   },
   blocksDiv: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '90%',
+    width: '100%',
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
@@ -59,6 +69,7 @@ const classes = {
   },
 
   removeButton: {
+
 
   },
 
@@ -73,7 +84,6 @@ const classes = {
   },
 
   titleField: {
-    marginTop: '4%',
     display: 'flex',
     width: '100%',
     marginRight: '20px',
@@ -81,6 +91,7 @@ const classes = {
 
     // backgroundColor: '#FFFFFF',
   },
+
 
   removeDiv: {
     height: '50%',
@@ -154,7 +165,7 @@ const TextBlocks = ({ classes, getBlocks }) => {
         if (block != null){
           return (<TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>)
         }
-        
+
       })}
       <div>
         <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
@@ -231,53 +242,38 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
 
   return (
     <div className={classes.titleDiv}>
-      <Paper className={classes.inputPaper} elevation = {2}>
-      <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Type of Input</FormLabel>
-          <RadioGroup
-            name="InputType"
-            className={classes.group}
-            value={type}
-            onChange={handleType}
-          >
-          <FormControlLabel
-            value="stuckInput"
-            control={<Radio color="primary" />}
-            label="Text"
 
-          />
-          <FormControlLabel
-            value="computerInput"
-            control={<Radio color="primary" />}
-            label="Input"
-
-          />
-          <FormControlLabel
-            value="computerOutput"
-            control={<Radio color="primary" />}
-            label="Output"
-
-          />
-
-
-        </RadioGroup>
-
-      </FormControl>
 
         <TextField
             id="outlined-full-width"
-            label="Text"
+            label="My Code"
             className={classes.titleField}
             value={text}
             onChange={({target}) => handleTextChange(target.value)}
             margin="normal"
             multiline
-            rows={3}
+            rows={4}
             variant="outlined"
             InputLabelProps={{
               shrink: true,
             }}
           />
+
+          <TextField
+              id="outlined-full-width"
+              label="Computer Output"
+              className={classes.titleField}
+              value={text}
+              onChange={({target}) => handleTextChange(target.value)}
+              margin="normal"
+              multiline
+              rows={4}
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
 
         {/* <TextField
           id="outlined-full-width"
@@ -294,9 +290,8 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
           }}
         /> */}
         <Button variant="outlined" color="secondary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
-            <RemoveIcon />
+            <CancelIcon />
         </Button>
-        </Paper>
 
     </div>
   );

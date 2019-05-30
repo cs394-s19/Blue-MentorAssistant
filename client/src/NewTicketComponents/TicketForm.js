@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { firebase } from '../firebaseConfig';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
+
 
 const classes = {
   titleDiv: {
@@ -63,7 +66,7 @@ const TicketForm = ({ classes }) => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [textBlocks, setTextBlocks] = useState([]);
-  const [exercise, setExercise] = useState('');
+  const [exercise, setExercise] = useState('exercise1');
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -126,7 +129,8 @@ const TicketForm = ({ classes }) => {
   ];
 
   function handleClick(event) {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
+    setExercise(event.target.value);
   }
 
   function handleMenuItemClick(event, index) {
@@ -203,15 +207,20 @@ const TicketForm = ({ classes }) => {
         />
       </div>
       <div className={classes.titleDiv}>
-      <Button
-        variant="contained"
-        color="primary"
-        aria-owns={anchorEl ? 'simple-menu' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        {exercise === '' ? "Select an exercise" : exercises[selectedIndex]}
-      </Button>
+
+
+      <Select
+          value={exercise}
+          onChange={handleClick}
+          input={<OutlinedInput name="age" id="outlined-age-simple" />}
+        >
+
+          {exercises.map((ex,index) => {
+            return <MenuItem value={ex}>{ex}</MenuItem>
+          })}
+
+        </Select>
+
       <Menu id="lock-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {exercises.map((option, index) => (
           <MenuItem
@@ -224,9 +233,9 @@ const TicketForm = ({ classes }) => {
         ))}
         </Menu>
       </div>
-      <div className={classes.titleDiv}>
-        <TextBlocks classes={classes} getBlocks={getBlocks}></TextBlocks>
-      </div>
+
+      <TextBlocks classes={classes} getBlocks={getBlocks}></TextBlocks>
+
       <div className={classes.titleDiv}>
       <Button size="Large" onClick={() => handleSubmit()} variant="contained" color="primary" className={classes.button}>Submit</Button>
       </div>
