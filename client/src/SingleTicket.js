@@ -107,7 +107,8 @@ const SingleTicket = ({match}) => {
   const reroute = () => {
     const netID = localStorage.getItem('ma-netid');
     if(netID == null || netID == "") {
-      //alert("login error: incorrect or nonexistent login. be sure to enable localstorage");
+      alert("You are not logged in!");
+      window.location.href = "/";
       return;
     }
     if((isStudent(netID)) && (window.location.href.indexOf("studentView") == -1)){
