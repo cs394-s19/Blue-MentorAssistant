@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import { Divider } from '@material-ui/core';
+import { firebase } from './firebaseConfig';
+import TextField from '@material-ui/core/TextField';
 
 const styles = makeStyles({
   app: {
@@ -23,33 +25,104 @@ const styles = makeStyles({
 });
 
 const SelectPage = () => {
+
+  const [loginText, setLoginText] = useState("");
   const CSS_styles = styles();
-  const navigateTo = (url) => {
-    window.location.href = url;
+  const [roster, setRoster] = useState({});
+
+  const reroute = () => {
+    const netID = localStorage.getItem('ma-netid');
+    if(netID == null || netID == "") {
+      //alert("login error: incorrect or nonexistent login. be sure to enable localstorage");
+      return;
+    }
+    let redir = "";
+    if(isStudent(netID)){
+      redir = "/newticket/";
+    }
+    else if (isMentor(netID)){
+      redir = "/queue/";
+    }
+    if(redir != ""){
+      window.location.href = redir;
+    }
   }
-  const navigateToStudents = () => {navigateTo("/newticket/");}
-  const navigateToMentors = () => {navigateTo("/queue/");}
-  const navigateToSingleTicket = () => {navigateTo("/ticket/2/");}
-  const navigateToNotes = () => {navigateTo("/notes/");}
+
+  const updateRoster = () => {
+    const database = firebase.database();
+    const dbref = database.ref('/roster/');
+    dbref.on('value', (snapshot) => {
+      const db = snapshot.val();
+      setRoster(db);
+    });
+  }
+
+  useEffect(() => {
+    updateRoster();
+  }, []);
+
+  useEffect(() => {
+    if(Object.keys(roster).length != 0){
+      reroute();
+    }
+  }, [roster]);
+
+  const isStudent = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
+    const db = roster;
+    if(!nid in db){
+      alert("incorrect netid!");
+      return false;
+    }
+    if(db[nid]["role"] == "student"){
+      return true;
+    }
+    return false;
+  }
+
+  const isMentor = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
+    const db = roster;
+    if(!nid in db){
+      alert("incorrect netid!");
+      return false;
+    }
+    if(db[nid]["role"] == "mentor"){
+      return true;
+    }
+    return false;
+  }
+
+  const handleLogin = () => {
+    alert("You have logged in with netID: " + loginText);
+    localStorage.setItem('ma-netid', loginText);
+    reroute();
+  }
+
+  const handleLoginChange = (e) => {
+    setLoginText(e.target.value);
+  }
+
   return (
     <div>
       <h1>Mentor's Assistant</h1>
+      <TextField
+        id="standard-name"
+        label="Name"
+        className={CSS_styles.textField}
+        value={loginText}
+        onChange={handleLoginChange}
+        margin="normal"
+      />
       <div className={CSS_styles.buttons}>
-        <Fab variant="extended" onClick={navigateToStudents} color="primary" aria-label="Add">
-          Students
+        <Fab variant="extended" onClick={handleLogin} color="primary" aria-label="Add">
+          Login
         </Fab>&nbsp; &nbsp;
-        <Fab variant="extended" onClick={navigateToMentors} color="primary" aria-label="Add">
-          Mentors
-        </Fab> &nbsp; &nbsp;
-        <Fab variant="extended" onClick={navigateToNotes} color="primary" aria-label="Add">
-          Notes
-        </Fab></div>
-        <br />
-        <Divider />
-        <br />
-        <Fab variant="extended" onClick={navigateToSingleTicket} color="primary" aria-label="Add">
-          See Example of Single Ticket
-        </Fab>
+      </div>
     </div>
   );
 }
