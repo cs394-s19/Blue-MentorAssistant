@@ -27,6 +27,7 @@ const styles = makeStyles({
 const SelectPage = () => {
 
   const [loginText, setLoginText] = useState("");
+  const CSS_styles = styles();
   const [roster, setRoster] = useState({});
 
   const reroute = () => {
@@ -42,7 +43,9 @@ const SelectPage = () => {
     else if (isMentor(netID)){
       redir = "/queue/";
     }
-    window.location.href = redir;
+    if(redir != ""){
+      window.location.href = redir;
+    }
   }
 
   const updateRoster = () => {
@@ -56,12 +59,18 @@ const SelectPage = () => {
 
   useEffect(() => {
     updateRoster();
-    //reroute();
   }, []);
 
-  const CSS_styles = styles();
+  useEffect(() => {
+    if(Object.keys(roster).length != 0){
+      reroute();
+    }
+  }, [roster]);
 
   const isStudent = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
     const db = roster;
     if(!nid in db){
       alert("incorrect netid!");
@@ -74,6 +83,9 @@ const SelectPage = () => {
   }
 
   const isMentor = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
     const db = roster;
     if(!nid in db){
       alert("incorrect netid!");
