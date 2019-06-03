@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Mentor Assistant
 
-## Available Scripts
+## Starting the application
+Clone the repository. From the root directory, `cd client` then  `npm install` then `npm start`. This will launch the application in the browser, on http://localhost:3000
 
-In the project directory, you can run:
+## File structure
+The application is split into 2 parts, the student side and the mentor side.
 
-### `npm start`
+## Student
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### NewTicketComponents
+NewTicket.js - The form to let students submit tickets. Comprised of:
+  TextBlocks.js - Where the API gets most of it's information. Students can submit their code input and output in "textBlocks"
+  TicketForm.js - The rest of the information, including the student's NetID, email, name, etc.
+  
+### StudentTicketViewComponents
+StudentViewInfo.js - After the student submits the form, they're redirected to this screen, which has the info they just submitted. It also has a chat window for back and forth communication between mentors and the student.
+  MentorResponse.js - the chat window
+  
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Mentor
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### SingleTicketComponents
+SingleTicketView.js - The wrapper for the the ticket view the mentors see after opening a ticket from the queue. Contains:
+  InfoComponents:
+    StudentInfo.js - Student's name, email, NetID
+    TicketHeader.js - Other information, like date submitted, exercise, and title
+    TicketInfo.js - contains the textBlocks (student's input and output)
+    Info.js - a wrapper for all the above Info Components
+    
+  Footer.js - a wrapper for the following components:
+    Suggestions.js - suggestions the API generated from the student's ticket
+  
+  InternalNotes.js - contains notes that the mentors can leave each other per exercise.
+  
+  ChatPane.js - the chat window for mentor/student communication
+  
+### QueueView
+QueueView.js - lists all the current tickets in the database. Clicking on one opens up the SingleTicketView for that ticket. Right now, all tickets route to Winter2019. A future TODO would be having a way for an instructor to setup a new class.
+  
