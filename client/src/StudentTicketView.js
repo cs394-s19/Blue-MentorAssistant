@@ -18,6 +18,15 @@ const classes = {
 
 
   },
+  titleDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    marginTop: '10px',
+    marginLeft: 'Auto',
+    marginRight: 'Auto',
+  },
   paper: {
     width: '74%',
     marginLeft: 'auto',

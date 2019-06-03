@@ -16,7 +16,6 @@ const classes = {
     marginRight: 'Auto',
 
   },
-
   statusDiv: {
     display: 'flex',
     flexDirection: 'row',

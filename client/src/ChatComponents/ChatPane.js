@@ -5,6 +5,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,10 +14,55 @@ import Fab from '@material-ui/core/Fab';
 import { firebase } from '../firebaseConfig';
 import Paper from '@material-ui/core/Paper';
 import UserTypes from '../enums/UserTypes';
+import { makeStyles } from '@material-ui/styles';
+
+const classes = {
+    titleDiv: {
+      display: 'block',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '90%',
+      marginTop: '10px',
+      marginLeft: 'Auto',
+      marginRight: 'Auto',
+  
+    },
+    theirMessage: {
+        marginBottom: '4px',
+        width: '60%',
+        float: 'left',
+        borderRadius: '5px 30px 30px',
+        border: '1.5px #adadad',
+        borderStyle: 'solid',
+        margin: '10px',
+        backgroundColor: 'rgb(221, 221, 221)',
+        boxShadow: '3px 3px 10px #adadad'
+    },
+    yourMessage: {
+        display: 'inline',
+        marginBottom: '4px',
+        width: '60%',
+        float: 'right',
+        textAlign: 'right',
+        borderRadius: '30px 30px 5px',
+        border: '1.5px #adadad',
+        borderStyle: 'solid',
+        margin: '10px',
+        backgroundColor: 'rgba(161,219,255,1)',
+        boxShadow: '3px 3px 10px #adadad'
+    },
+    chatWrapper: {
+        float: 'right',
+
+    }
+  };
+
+
+  const classesMS = makeStyles(classes);
 
 // Volunteezy ClassChat
 
-const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
+const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter, exercise}) =>
 {
     const [messageList,setMessageList] = useState([]);
     const [currentMessage, setCurrentMessage] = useState("");
@@ -26,7 +72,7 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
         const messagesRef = database.ref('winter2019' + '/' + 'exercise1' + '/tickets/' +  match.params.id + '/userMessages/');
         messagesRef.on('value',(snapshot) =>
         {
-            let messageStrings = []
+            let messageObjects = []
             const msgs = snapshot.val();
             if(msgs == null)
             {
@@ -37,10 +83,10 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
             console.log(msgs);
             messageKeys.map((key) => {
                 console.log(msgs[key])
-                messageStrings.push(renderUser(msgs[key]["userType"]) + " " + msgs[key]["message"]);
+                messageObjects.push(msgs[key]);
             });
-            console.log(messageStrings);
-            setMessageList(messageStrings);
+            console.log(messageObjects);
+            setMessageList(messageObjects);
         })
          
     }
@@ -51,9 +97,9 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
         switch(userType)
         {
             case UserTypes.STUDENT:
-                return "Student:"
+                return "Student"
             case UserTypes.MENTOR:
-                return "Mentor:";
+                return "Mentor";
         }
     }
 
@@ -68,7 +114,7 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
         const messagesRef = database.ref('winter2019' + '/' + 'exercise1' + '/tickets/' +  match.params.id + '/userMessages/');
 
         console.log(messagesRef);
-        messagesRef.push({userType:userType,message:message});
+        messagesRef.push({userType:currentUserType,message:message});
         messagesRef.on('value', (snapshot) =>
         {
             const db = snapshot.val();
@@ -81,17 +127,32 @@ const ChatPane = ({userType, ticket, match, quarter, exercise}) =>
     {
         setCurrentMessage(event.target.value);
         console.log(currentMessage);
+        console.log(styleClass);
+    }
+    const getMessageStyle = (message) =>
+    {
+        return (
+            message.userType == currentUserType ?
+                classes.yourMessage :
+                classes.theirMessage
+            )
     }
     return (
-        <div>
+        <div style={classes.titleDiv}>
+            <Typography variant="h5">
+                Chat
+            </Typography>
             <List>
-                <ListItem>
-                    <p>'Stuff!'</p>
-                </ListItem>
                 <Paper>
-                {messageList && messageList.map(message => <ListItem>
-                    <p>{message}</p>
-                </ListItem>)}
+                {messageList && messageList.map(message => <ListItem style={
+                    
+                    getMessageStyle(message)}>
+                    <div style= {classes.chatWrapper}>
+                        <Typography variant="p"><i>{renderUser(message.userType)}</i></Typography>
+                        <p>{message.message }</p>
+                    </div>
+                </ListItem>
+                )}
                 <form>
                 <TextField
                     id="inputMessage"
