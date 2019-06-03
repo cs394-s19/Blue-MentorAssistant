@@ -9,32 +9,32 @@ The application is split into 2 parts, the student side and the mentor side.
 ## Student
 
 ### NewTicketComponents
-NewTicket.js - The form to let students submit tickets. Comprised of:
-  TextBlocks.js - Where the API gets most of it's information. Students can submit their code input and output in "textBlocks"
-  TicketForm.js - The rest of the information, including the student's NetID, email, name, etc.
+* NewTicket.js - The form to let students submit tickets. Comprised of:
+  * TextBlocks.js - Where the API gets most of it's information. Students can submit their code input and output in "textBlocks"
+  * TicketForm.js - The rest of the information, including the student's NetID, email, name, etc.
   
 ### StudentTicketViewComponents
-StudentViewInfo.js - After the student submits the form, they're redirected to this screen, which has the info they just submitted. It also has a chat window for back and forth communication between mentors and the student.
-  MentorResponse.js - the chat window
+* StudentViewInfo.js - After the student submits the form, they're redirected to this screen, which has the info they just submitted. It also has a chat window for back and forth communication between mentors and the student.
+  * MentorResponse.js - the chat window
   
 
 ## Mentor
 
 ### SingleTicketComponents
-SingleTicketView.js - The wrapper for the the ticket view the mentors see after opening a ticket from the queue. Contains:
-  InfoComponents:
-    StudentInfo.js - Student's name, email, NetID
-    TicketHeader.js - Other information, like date submitted, exercise, and title
-    TicketInfo.js - contains the textBlocks (student's input and output)
-    Info.js - a wrapper for all the above Info Components
+* SingleTicketView.js - The wrapper for the the ticket view the mentors see after opening a ticket from the queue. Contains:
+  * InfoComponents:
+    * StudentInfo.js - Student's name, email, NetID
+    * TicketHeader.js - Other information, like date submitted, exercise, and title
+    * TicketInfo.js - contains the textBlocks (student's input and output)
+    * Info.js - a wrapper for all the above Info Components
     
-  Footer.js - a wrapper for the following components:
-    Suggestions.js - suggestions the API generated from the student's ticket
+  * Footer.js - a wrapper for the following components:
+    * Suggestions.js - suggestions the API generated from the student's ticket
   
-  InternalNotes.js - contains notes that the mentors can leave each other per exercise.
+  * InternalNotes.js - contains notes that the mentors can leave each other per exercise.
   
-  ChatPane.js - the chat window for mentor/student communication
+  * ChatPane.js - the chat window for mentor/student communication
   
 ### QueueView
-QueueView.js - lists all the current tickets in the database. Clicking on one opens up the SingleTicketView for that ticket. Right now, all tickets route to Winter2019. A future TODO would be having a way for an instructor to setup a new class.
+* QueueView.js - lists all the current tickets in the database. Clicking on one opens up the SingleTicketView for that ticket. Right now, all tickets route to Winter2019. A future TODO would be having a way for an instructor to setup a new class.
   
