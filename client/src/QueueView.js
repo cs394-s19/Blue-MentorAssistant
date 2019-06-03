@@ -40,6 +40,7 @@ const styles = makeStyles({
   },
   listPaper: {
     width: '70%',
+    overflowX: 'hidden',
   },
   ticketinfo: {
     display: 'grid',
@@ -241,7 +242,72 @@ const QueueView = () => {
       });
     }
     getData();
+    updateRoster();
   }, []);
+
+  const [roster, setRoster] = useState({});
+
+  const reroute = () => {
+    const netID = localStorage.getItem('ma-netid');
+    if(netID == null || netID == "") {
+      alert("You are not logged in!");
+      window.location.href = "/";
+      return;
+    }
+    if((isStudent(netID)) && (window.location.href.indexOf("studentView") == -1)){
+      window.location.href = "/newTicket/";
+    }
+    else if (isMentor(netID)){
+
+    }
+  }
+
+  const updateRoster = () => {
+    const database = firebase.database();
+    const dbref = database.ref('/roster/');
+    dbref.on('value', (snapshot) => {
+      const db = snapshot.val();
+      setRoster(db);
+    });
+  }
+
+  useEffect(() => {
+    if(Object.keys(roster).length != 0){
+      reroute();
+    }
+  }, [roster]);
+
+  const isStudent = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
+    const db = roster;
+    if(!(nid in db)){
+      alert("incorrect netid!");
+      window.location.href = "/";
+      return false;
+    }
+    if(db[nid]["role"] == "student"){
+      return true;
+    }
+    return false;
+  }
+
+  const isMentor = (nid) => {
+    if(Object.keys(roster).length == 0){
+      return;
+    }
+    const db = roster;
+    if(!(nid in db)){
+      alert("incorrect netid!");
+      window.location.href = "/";
+      return false;
+    }
+    if(db[nid]["role"] == "mentor"){
+      return true;
+    }
+    return false;
+  }
 
   return(
   <div className={stylesheet.wrapper}>

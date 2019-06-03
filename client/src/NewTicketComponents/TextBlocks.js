@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import CancelIcon from '@material-ui/icons/Cancel';
 import Fab from '@material-ui/core/Fab';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -25,13 +25,22 @@ const classes = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%',
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
+  
 
 
   },
+
+  pairTextDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    border: '1px solid blue',
+    width: '90%',
+
+  },
+
   inputPaper: {
     display: 'flex',
     flexDirection: 'row',
@@ -43,14 +52,15 @@ const classes = {
 
   },
   addButton: {
-
+    marginRight: '2%',
+    marginTop: '20px',
     float: 'right',
   },
   blocksDiv: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '90%',
+    width: '100%',
     marginTop: '10px',
     marginLeft: 'Auto',
     marginRight: 'Auto',
@@ -59,6 +69,7 @@ const classes = {
   },
 
   removeButton: {
+
 
   },
 
@@ -73,7 +84,6 @@ const classes = {
   },
 
   titleField: {
-    marginTop: '4%',
     display: 'flex',
     width: '100%',
     marginRight: '20px',
@@ -81,6 +91,7 @@ const classes = {
 
     // backgroundColor: '#FFFFFF',
   },
+
 
   removeDiv: {
     height: '50%',
@@ -122,7 +133,12 @@ const TextBlocks = ({ classes, getBlocks }) => {
       label: label
     };
     let blocksCopy = blocks;
-    blocksCopy[blockIndex] = blockInfo;
+    if (type === "sourceCode") {
+      blocksCopy[blockIndex] = blockInfo;
+    }
+    else {
+      blocksCopy[blockIndex+1] = blockInfo;
+    }
     updateBlocks(blocksCopy);
     getBlocks(blocks);
   }
@@ -131,30 +147,38 @@ const TextBlocks = ({ classes, getBlocks }) => {
     let blocksCopy = blocks;
     blocksCopy.push(
       {
-        type: '',
+        type: 'sourceCode',
         text: '',
         label: ''
       }
-    )
+    );
+    blocksCopy.push(
+      {
+        type: 'computerOutput',
+        text: '',
+        label: ''
+      }
+    );
     updateBlocks(blocksCopy);
-    updateNumBlocks(numBlocks+1);
+    updateNumBlocks(numBlocks+2);
   }
 
   const deleteBlock = (index) => {
     let blocksCopy = blocks;
     //blocksCopy.splice(index, 1);
     blocksCopy[index] = null;
+    blocksCopy[index+1] = null;
     updateBlocks(blocksCopy);
-    updateNumBlocks(numBlocks-1);
+    updateNumBlocks(numBlocks-2);
   }
 
   return (
     <div className={classes.blocksDiv}>
       {blocks.map((block, index) => {
-        if (block != null){
+        if (block != null && index%2 === 0){
           return (<TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>)
         }
-        
+
       })}
       <div>
         <Fab color="primary" className={classes.addButton} aria-label="Add" onClick={()=>newBlock()}>
@@ -170,133 +194,60 @@ const TextBlocks = ({ classes, getBlocks }) => {
 
 
 const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
-  const [type, setType] = useState('');
-  const [label, setLabel] = useState('');
-  const [text, setText] = useState('');
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selected, setSelected] = useState(-1);
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
 
-  // function handleClick(event) {
-  //   setAnchorEl(event.currentTarget);
-  // }
-
-  // const handleMenu = (index) => {
-  //   setAnchorEl(null);
-  //   setSelected(index);
-  //   setType(inputTypes[index]);
-  //   updateTextBlock(blockIndex, inputTypes[index], text, label);
-  // }
-
-
-
-  // function handleClose() {
-  //   setAnchorEl(null);
-  // }
-
-  const handleType = (event) => {
-    setType(event.target.value);
-    updateTextBlock(blockIndex, event.target.value, text, label);
+  const handleInputChange = (value) => {
+    setInput(value);
+    updateTextBlock(blockIndex, "sourceCode", value, '');
   }
 
-  const handleTextChange = (value) => {
-    setText(value);
-    updateTextBlock(blockIndex, type, value, label);
-  }
-
-  const handleLabelChange = (value) => {
-    setLabel(value);
-    updateTextBlock(blockIndex, type, text, value);
+  const handleOutputChange = (value) => {
+    setOutput(value);
+    updateTextBlock(blockIndex, "computerOutput", value, '');
   }
 
   const handleDelete = (index) => {
     deleteBlock(index);
   }
 
-
-  const inputTypes = [
-    'sourceCode',
-    'computerOutput',
-    'ConfusionInput',
-    'StuckInput',
-    'expectedOutput'
-  ];
-
-  const shownInputTypes = [
-    'Source Code',
-    'Computer Output',
-    'Confusion Input',
-    'Stuck Input',
-    'Expected Output'
-  ];
-
   return (
     <div className={classes.titleDiv}>
-      <Paper className={classes.inputPaper} elevation = {2}>
-      <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Type of Input</FormLabel>
-          <RadioGroup
-            name="InputType"
-            className={classes.group}
-            value={type}
-            onChange={handleType}
-          >
-          <FormControlLabel
-            value="stuckInput"
-            control={<Radio color="primary" />}
-            label="Text"
 
-          />
-          <FormControlLabel
-            value="computerInput"
-            control={<Radio color="primary" />}
-            label="Input"
-
-          />
-          <FormControlLabel
-            value="computerOutput"
-            control={<Radio color="primary" />}
-            label="Output"
-
-          />
-
-
-        </RadioGroup>
-
-      </FormControl>
 
         <TextField
             id="outlined-full-width"
-            label="Text"
+            label="My Code"
             className={classes.titleField}
-            value={text}
-            onChange={({target}) => handleTextChange(target.value)}
+            value={input}
+            onChange={({target}) => handleInputChange(target.value)}
             margin="normal"
             multiline
-            rows={3}
+            rows={4}
             variant="outlined"
             InputLabelProps={{
               shrink: true,
             }}
           />
 
-        {/* <TextField
-          id="outlined-full-width"
-          label="Label"
-          className={classes.titleField}
-          value={label}
-          onChange={({target}) => handleLabelChange(target.value)}
-          margin="normal"
-          multiline
-          rows={3}
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        /> */}
+          <TextField
+              id="outlined-full-width"
+              label="Computer Output"
+              className={classes.titleField}
+              value={output}
+              onChange={({target}) => handleOutputChange(target.value)}
+              margin="normal"
+              multiline
+              rows={4}
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
         <Button variant="outlined" color="secondary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
-            <RemoveIcon />
+            <CancelIcon />
         </Button>
-        </Paper>
 
     </div>
   );
