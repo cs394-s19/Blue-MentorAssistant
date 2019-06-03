@@ -121,6 +121,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
       let d = new Date();
       myJson["date"] = d.getTime();
       myJson["status"] = "Unread";
+      myJson["student"]["email"] = email;
       let database = firebase.database();
       database.ref('winter2019/' + exercise + '/tickets/' + id + '/').update(myJson);
       alert("Your ticket was successfully updated.");
@@ -145,7 +146,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
       textBlocks: blocks,
     });
     handleSubmit();
-    window.location.href = "/queue/";
+    //window.location.href = "/queue/";
   }
 
   return (
