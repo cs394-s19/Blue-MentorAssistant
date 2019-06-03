@@ -141,6 +141,7 @@ const SingleTicket = ({match}) => {
     const db = roster;
     if(!(nid in db)){
       alert("incorrect netid!");
+      window.location.href = "/";
       return false;
     }
     if(db[nid]["role"] == "student"){
@@ -156,6 +157,7 @@ const SingleTicket = ({match}) => {
     const db = roster;
     if(!(nid in db)){
       alert("incorrect netid!");
+      window.location.href = "/";
       return false;
     }
     if(db[nid]["role"] == "mentor"){
