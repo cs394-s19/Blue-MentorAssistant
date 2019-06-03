@@ -112,7 +112,7 @@ const SingleTicket = ({match}) => {
       return;
     }
     if((isStudent(netID)) && (window.location.href.indexOf("studentView") == -1)){
-      window.location.href += "/studentView/";
+      window.location.href += "studentView/";
     }
     else if (isMentor(netID)){
 
