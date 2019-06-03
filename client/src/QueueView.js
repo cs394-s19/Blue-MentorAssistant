@@ -40,6 +40,7 @@ const styles = makeStyles({
   },
   listPaper: {
     width: '70%',
+    overflowX: 'hidden',
   },
   ticketinfo: {
     display: 'grid',
