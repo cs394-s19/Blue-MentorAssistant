@@ -86,7 +86,7 @@ const TicketForm = ({ classes }) => {
       responses: [],
       patterns: null,
       source: exercises[selectedIndex],
-      textBlocks: textBlocks,
+      textBlocks: textBlocks.filter(block => { return block != null}),
       category: "Error",
       status: "Unread"
     };
@@ -113,7 +113,7 @@ const TicketForm = ({ classes }) => {
       myJson["date"] = d.getTime();
       myJson["status"] = "Unread";
       let database = firebase.database();
-      database.ref('winter2019/' + exercises[selectedIndex] + '/tickets').push(myJson);
+      database.ref('winter2019/' + exercise + '/tickets').push(myJson);
       alert("Your ticket was successfully submitted.");
       //window.location.href = "/newticket/";
     }

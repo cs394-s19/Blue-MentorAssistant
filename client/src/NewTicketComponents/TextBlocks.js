@@ -133,7 +133,12 @@ const TextBlocks = ({ classes, getBlocks }) => {
       label: label
     };
     let blocksCopy = blocks;
-    blocksCopy[blockIndex] = blockInfo;
+    if (type === "sourceCode") {
+      blocksCopy[blockIndex] = blockInfo;
+    }
+    else {
+      blocksCopy[blockIndex+1] = blockInfo;
+    }
     updateBlocks(blocksCopy);
     getBlocks(blocks);
   }
@@ -142,27 +147,35 @@ const TextBlocks = ({ classes, getBlocks }) => {
     let blocksCopy = blocks;
     blocksCopy.push(
       {
-        type: '',
+        type: 'sourceCode',
         text: '',
         label: ''
       }
-    )
+    );
+    blocksCopy.push(
+      {
+        type: 'computerOutput',
+        text: '',
+        label: ''
+      }
+    );
     updateBlocks(blocksCopy);
-    updateNumBlocks(numBlocks+1);
+    updateNumBlocks(numBlocks+2);
   }
 
   const deleteBlock = (index) => {
     let blocksCopy = blocks;
     //blocksCopy.splice(index, 1);
     blocksCopy[index] = null;
+    blocksCopy[index+1] = null;
     updateBlocks(blocksCopy);
-    updateNumBlocks(numBlocks-1);
+    updateNumBlocks(numBlocks-2);
   }
 
   return (
     <div className={classes.blocksDiv}>
       {blocks.map((block, index) => {
-        if (block != null){
+        if (block != null && index%2 === 0){
           return (<TextBlock classes={classes} updateTextBlock={setBlocks} blockIndex={index} deleteBlock={deleteBlock}></TextBlock>)
         }
 
@@ -181,64 +194,22 @@ const TextBlocks = ({ classes, getBlocks }) => {
 
 
 const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
-  const [type, setType] = useState('');
-  const [label, setLabel] = useState('');
-  const [text, setText] = useState('');
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selected, setSelected] = useState(-1);
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
 
-  // function handleClick(event) {
-  //   setAnchorEl(event.currentTarget);
-  // }
-
-  // const handleMenu = (index) => {
-  //   setAnchorEl(null);
-  //   setSelected(index);
-  //   setType(inputTypes[index]);
-  //   updateTextBlock(blockIndex, inputTypes[index], text, label);
-  // }
-
-
-
-  // function handleClose() {
-  //   setAnchorEl(null);
-  // }
-
-  const handleType = (event) => {
-    setType(event.target.value);
-    updateTextBlock(blockIndex, event.target.value, text, label);
+  const handleInputChange = (value) => {
+    setInput(value);
+    updateTextBlock(blockIndex, "sourceCode", value, '');
   }
 
-  const handleTextChange = (value) => {
-    setText(value);
-    updateTextBlock(blockIndex, type, value, label);
-  }
-
-  const handleLabelChange = (value) => {
-    setLabel(value);
-    updateTextBlock(blockIndex, type, text, value);
+  const handleOutputChange = (value) => {
+    setOutput(value);
+    updateTextBlock(blockIndex, "computerOutput", value, '');
   }
 
   const handleDelete = (index) => {
     deleteBlock(index);
   }
-
-
-  const inputTypes = [
-    'sourceCode',
-    'computerOutput',
-    'ConfusionInput',
-    'StuckInput',
-    'expectedOutput'
-  ];
-
-  const shownInputTypes = [
-    'Source Code',
-    'Computer Output',
-    'Confusion Input',
-    'Stuck Input',
-    'Expected Output'
-  ];
 
   return (
     <div className={classes.titleDiv}>
@@ -248,8 +219,8 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
             id="outlined-full-width"
             label="My Code"
             className={classes.titleField}
-            value={text}
-            onChange={({target}) => handleTextChange(target.value)}
+            value={input}
+            onChange={({target}) => handleInputChange(target.value)}
             margin="normal"
             multiline
             rows={4}
@@ -263,8 +234,8 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
               id="outlined-full-width"
               label="Computer Output"
               className={classes.titleField}
-              value={text}
-              onChange={({target}) => handleTextChange(target.value)}
+              value={output}
+              onChange={({target}) => handleOutputChange(target.value)}
               margin="normal"
               multiline
               rows={4}
@@ -274,21 +245,6 @@ const TextBlock = ({ classes, updateTextBlock, blockIndex, deleteBlock }) => {
               }}
             />
 
-
-        {/* <TextField
-          id="outlined-full-width"
-          label="Label"
-          className={classes.titleField}
-          value={label}
-          onChange={({target}) => handleLabelChange(target.value)}
-          margin="normal"
-          multiline
-          rows={3}
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        /> */}
         <Button variant="outlined" color="secondary" className={classes.removeButton} aria-label="Remove" onClick={()=> handleDelete(blockIndex)} >
             <CancelIcon />
         </Button>
