@@ -72,7 +72,7 @@ const SelectPage = () => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }
@@ -87,7 +87,7 @@ const SelectPage = () => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }
@@ -112,7 +112,7 @@ const SelectPage = () => {
       <h1>Mentor's Assistant</h1>
       <TextField
         id="standard-name"
-        label="Name"
+        label="NetID"
         className={CSS_styles.textField}
         value={loginText}
         onChange={handleLoginChange}

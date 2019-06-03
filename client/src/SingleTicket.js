@@ -139,7 +139,7 @@ const SingleTicket = ({match}) => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }
@@ -154,7 +154,7 @@ const SingleTicket = ({match}) => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }

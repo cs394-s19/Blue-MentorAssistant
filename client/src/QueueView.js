@@ -281,7 +281,7 @@ const QueueView = () => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }
@@ -296,7 +296,7 @@ const QueueView = () => {
       return;
     }
     const db = roster;
-    if(!nid in db){
+    if(!(nid in db)){
       alert("incorrect netid!");
       return false;
     }
