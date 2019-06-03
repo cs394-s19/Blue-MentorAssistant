@@ -79,6 +79,55 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
   //ticket info
   const [blocks, setBlocks] = useState([]);
 
+  const validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  const handleSubmit = async () => {
+    let formSubmit = {
+      student: {
+        "name": name,
+        "id": netID,
+        "email": email
+      },
+      message: title,
+      responses: [],
+      patterns: null,
+      source: exercise,
+      textBlocks: blocks,
+      category: "Error",
+      status: "Unread"
+    };
+
+    if(formSubmit.message === "" || formSubmit.student.email === "" || formSubmit.student.id === "" || formSubmit.student.name === ""){
+      alert("Please fill out the entire form.")
+    }
+    //else if(validateEmail(formSubmit.student.email) === false){
+      //alert("Please use a valid email.")
+    //}
+    //else{
+      const response = await fetch('https://secure-oasis-87770.herokuapp.com/api/form', {
+        method: 'POST',
+        body: JSON.stringify(formSubmit), // string or object
+        headers:{
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'https://secure-oasis-87770.herokuapp.com/'
+        }
+      });
+
+      const myJson = await response.json();
+      console.log("myJson ====> ", myJson);
+      let d = new Date();
+      myJson["date"] = d.getTime();
+      myJson["status"] = "Unread";
+      let database = firebase.database();
+      database.ref('winter2019/' + exercise + '/tickets/' + id + '/').update(myJson);
+      alert("Your ticket was successfully updated.");
+      //window.location.href = "/newticket/";
+   // }
+  }
+
   //handle the saving logic
   function handleSave() {
     const now = new Date;
@@ -95,6 +144,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
       //date: submitDate,
       textBlocks: blocks,
     });
+    handleSubmit();
     window.location.href = "/queue/";
   }
 
