@@ -112,6 +112,7 @@ const TicketForm = ({ classes }) => {
       let d = new Date();
       myJson["date"] = d.getTime();
       myJson["status"] = "Unread";
+      myJson["student"]["email"] = email;
       let database = firebase.database();
       database.ref('winter2019/' + exercise + '/tickets').push(myJson);
       alert("Your ticket was successfully submitted.");
