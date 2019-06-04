@@ -30,7 +30,7 @@ const App = ({classes}) => {
 
   return (
     <div className={classes.App}>
-        <SingleTicket styles = {classes}/>
+        Testing App.js
     </div>
   );
 }
