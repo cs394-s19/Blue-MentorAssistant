@@ -30,7 +30,7 @@ const App = ({classes}) => {
 
   return (
     <div className={classes.App}>
-        Testing App.js
+        <Home />
     </div>
   );
 }
