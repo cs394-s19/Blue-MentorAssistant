@@ -70,6 +70,15 @@ const TicketForm = ({ classes }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const ID = localStorage.getItem('ma-netid');
+  const database = firebase.database();
+  const dbref = database.ref('/roster/' + ID);
+  dbref.once('value', (snapshot) => {
+    const db = snapshot.val();
+    setName(db.name);
+    setEmail(db.email);
+  });
+
   const validateEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -154,7 +163,7 @@ const TicketForm = ({ classes }) => {
           id="outlined-name"
           label="NetID"
           className={classes.statusField}
-          value={netID}
+          value={ID}
           onChange={(e) => setNetID(e.target.value)}
           margin="normal"
           variant="outlined"
