@@ -91,8 +91,6 @@ const SingleTicket = ({match}) => {
      ticketRef.once('value').then((snapshot) => {
       if (snapshot.val())
         setTicket(snapshot.val());
-        if (snapshot.val()['status'] === 'Unread')
-          database.ref(`${quarter}/${exercise}/tickets/${match.params.id}`).update({ status: 'Opened'});
     });
   }
 
