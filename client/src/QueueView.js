@@ -4,13 +4,10 @@
 import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import HelpOutline from '@material-ui/icons/HelpOutline';
-import ArrowBack from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
 import { firebase } from './firebaseConfig';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -33,7 +30,8 @@ const styles = makeStyles({
 
   },
   toolbar: {
-
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   list: {
     width: '100%',
@@ -50,16 +48,25 @@ const styles = makeStyles({
     color: 'black',
     textDecoration: 'none',
   },
+  appBarTitle: {
+
+  },
+  NewTicketBtn: {
+
+  },
 });
 
 const QueueHeader = ({styles}) => {
   const stylesheet = styles();
-
+  const handleNewTicketBtn = () => {
+    window.location.href = "/newticket/";
+  }
   return(
     <div className={stylesheet.appbarwrapper}>
       <AppBar className={stylesheet.appbar} position="sticky" color="primary">
         <Toolbar className={stylesheet.toolbar}>
-          <h3>Mentor's Assistant | Queue | Winter 2019</h3>
+          <h3 className={stylesheet.appBarTitle}>Mentor's Assistant | Queue | Winter 2019</h3>
+          <Button className={stylesheet.NewTicketBtn} variant="contained" color="primary" onClick={handleNewTicketBtn}>New Ticket</Button>
         </Toolbar>
       </AppBar>
     </div>
