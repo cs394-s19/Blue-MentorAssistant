@@ -69,7 +69,7 @@ const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter
     const getMessages = () =>
     {
 
-        const messagesRef = database.ref('winter2019' + '/' + 'exercise1' + '/tickets/' +  match.params.id + '/userMessages/');
+        const messagesRef = database.ref(quarter + '/' + exercise + '/tickets/' +  match.params.id + '/userMessages/');
         messagesRef.on('value',(snapshot) =>
         {
             let messageObjects = []
@@ -111,7 +111,7 @@ const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter
     const sendMessage = (message) =>
     {
         setCurrentMessage("");
-        const messagesRef = database.ref('winter2019' + '/' + 'exercise1' + '/tickets/' +  match.params.id + '/userMessages/');
+        const messagesRef = database.ref(quarter + '/' + exercise + '/tickets/' +  match.params.id + '/userMessages/');
 
         console.log(messagesRef);
         messagesRef.push({userType:currentUserType,message:message});

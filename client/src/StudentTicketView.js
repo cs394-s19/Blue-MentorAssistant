@@ -111,7 +111,7 @@ const StudentTicketView = ({match}) => {
       <div className = {CSS_classes.App}>
             <Paper className = {CSS_classes.paper} elevation = {6}>
               <StudentViewInfo classes = {classes} exercis={match.params.exercise} ticket = {ticket} />
-              <ChatPane ticket={ticket} match={match} userType={UserTypes.STUDENT} />
+              <ChatPane ticket={ticket} match={match} exercise={match.params.exercise} quarter={match.params.quarter} userType={UserTypes.STUDENT} />
             </Paper>
       </div>
     </div>

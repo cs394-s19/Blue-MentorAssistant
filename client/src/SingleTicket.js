@@ -175,7 +175,7 @@ const SingleTicket = ({match}) => {
                 <Footer classes={classes} ticket={ticket} id={match.params.id} quarter={match.params.quarter} exercise={match.params.exercise} />
                 <InternalNotes quarter={match.params.quarter} exercise={match.params.exercise} classes={classes} ticket={ticket}/>
               </div>
-              <ChatPane ticket={ticket} match={match} userType={UserTypes.MENTOR} styleClass={classes} />
+              <ChatPane ticket={ticket} match={match} exercise={match.params.exercise} quarter={match.params.quarter} userType={UserTypes.MENTOR} styleClass={classes} />
             </Paper>
       </div>
     </div>
