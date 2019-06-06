@@ -88,7 +88,7 @@ const TicketForm = ({ classes }) => {
       source: exercises[selectedIndex],
       textBlocks: textBlocks.filter(block => { return block != null}),
       category: "Error",
-      status: "Unread"
+      status: "Needs Help"
     };
 
     if(formSubmit.message === "" || formSubmit.student.email === "" || formSubmit.student.id === "" || formSubmit.student.name === ""){
