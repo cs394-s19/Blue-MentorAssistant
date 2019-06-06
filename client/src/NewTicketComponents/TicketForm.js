@@ -89,7 +89,7 @@ const TicketForm = ({ classes }) => {
       source: exercises[selectedIndex],
       textBlocks: textBlocks.filter(block => { return block != null}),
       category: "Error",
-      status: "Unread"
+      status: "Needs Help"
     };
 
     if(formSubmit.message === "" || formSubmit.student.email === "" || formSubmit.student.id === "" || formSubmit.student.name === ""){
@@ -112,7 +112,8 @@ const TicketForm = ({ classes }) => {
       console.log("myJson ====> ", myJson);
       let d = new Date();
       myJson["date"] = d.getTime();
-      myJson["status"] = "Unread";
+      myJson["status"] = "Needs Help";
+      myJson["student"]["email"] = email;
       let database = firebase.database();
       let ref = database.ref('winter2019/' + exercise + '/tickets').push(myJson, 
           (e) => {

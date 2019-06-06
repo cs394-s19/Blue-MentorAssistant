@@ -96,7 +96,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
       source: exercise,
       textBlocks: blocks,
       category: "Error",
-      status: "Unread"
+      status: "Needs Help"
     };
 
     if(formSubmit.message === "" || formSubmit.student.email === "" || formSubmit.student.id === "" || formSubmit.student.name === ""){
@@ -119,7 +119,7 @@ const Info = ({quarter, classes, id, ticket, exercis}) => {
       console.log("myJson ====> ", myJson);
       let d = new Date();
       myJson["date"] = d.getTime();
-      myJson["status"] = "Unread";
+      myJson["status"] = "Needs Help";
       myJson["student"]["email"] = email;
       let database = firebase.database();
       database.ref('winter2019/' + exercise + '/tickets/' + id + '/').update(myJson);

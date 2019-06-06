@@ -46,22 +46,7 @@ const classes = {
 
 const MentorResponse = ({classes, ticket}) => (
     <div className={classes.suggestionsDiv}>
-      <div className={classes.typographyDiv}>
-        <Typography variant="h5" className={classes.typography}>
-          Suggestions
-        </Typography>
-      </div>
-      <div className={classes.allSuggestions}>
-        <List>
-                <Paper className={classes.suggestionPaper} elevation = {2}>
-                  <ListItem>
-                    <ListItemText
-                      primary="Test Mentor Feedback"
-                      />
-                    </ListItem>
-                </Paper>
-        </List>
-      </div>
+      
     </div>
 )
 
