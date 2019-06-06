@@ -36,7 +36,7 @@ const classes = {
   openModalBtn: {
     position: 'relative',
     marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: '10px',
 
     textAlign: 'center',
   },
@@ -101,7 +101,7 @@ const Footer = ({classes, ticket, id, quarter, exercise}) => {
   return (
     <div>
       <div className={classes.openModalBtn}>
-        <Button onClick={handleModal} variant="contained" color="primary" className={classes.openModalBtn}>Send Email</Button>
+
         <Button onClick={handleSubmit} variant="contained" color="primary" className={classes.openModalBtn}>Complete</Button>
       </div>
       <Modal
