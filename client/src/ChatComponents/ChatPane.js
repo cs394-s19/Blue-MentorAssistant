@@ -15,6 +15,12 @@ import { firebase } from '../firebaseConfig';
 import Paper from '@material-ui/core/Paper';
 import UserTypes from '../enums/UserTypes';
 import { makeStyles } from '@material-ui/styles';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import SendIcon from '@material-ui/icons/Send';
+
+
 
 const classes = {
     titleDiv: {
@@ -25,7 +31,7 @@ const classes = {
       marginTop: '10px',
       marginLeft: 'Auto',
       marginRight: 'Auto',
-  
+
     },
     theirMessage: {
         marginBottom: '4px',
@@ -54,7 +60,32 @@ const classes = {
     chatWrapper: {
         float: 'right',
 
-    }
+    },
+    upperDiv: {
+
+      border: '1px solid red',
+
+    },
+    flexDiv: {
+
+
+     },
+     input: {
+
+
+       width: '94%',
+       border: '1px solid gray',
+       borderRadius: '4px',
+       paddingLeft: '10px',
+
+
+     },
+     iconButton: {
+       padding: 10,
+
+     },
+
+
   };
 
 
@@ -88,7 +119,7 @@ const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter
             console.log(messageObjects);
             setMessageList(messageObjects);
         })
-         
+
     }
 
     const renderUser = (userType) =>
@@ -143,9 +174,8 @@ const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter
                 Chat
             </Typography>
             <List>
-                <Paper>
+              <Paper>
                 {messageList && messageList.map(message => <ListItem style={
-                    
                     getMessageStyle(message)}>
                     <div style= {classes.chatWrapper}>
                         <Typography variant="p"><i>{renderUser(message.userType)}</i></Typography>
@@ -153,23 +183,32 @@ const ChatPane = ({userType: currentUserType, styleClass, ticket, match, quarter
                     </div>
                 </ListItem>
                 )}
-                <form>
-                <TextField
-                    id="inputMessage"
-                    margin="normal"
-                    multiline
-                    rows={3}
-                    fullWidth={true}
-                    onChange = {updateCurrentMessage}
-                    variant="outlined"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}>
-                </TextField>
-                <Button size="Large"onClick={() => sendMessage(currentMessage)}>
-                    Submit
-                </Button>
-                </form>
+
+
+
+
+                <InputBase
+                  id="inputMessage"
+                  margin="normal"
+                  multiline
+                  rows={1}
+                  fullWidth={true}
+                  style={classes.input}
+                  placeholder="Send a Message"
+                  onChange = {updateCurrentMessage}
+                  InputLabelProps={{
+                      shrink: true,
+                  }}
+                />
+
+                <IconButton style={classes.iconButton} aria-label="Search" onClick={() => sendMessage(currentMessage)}>
+                  <SendIcon />
+                </IconButton>
+
+
+
+
+
                 </Paper>
             </List>
         </div>
