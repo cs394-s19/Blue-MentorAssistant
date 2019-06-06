@@ -42,7 +42,7 @@ const styles = makeStyles({
   },
   ticketinfo: {
     display: 'grid',
-    gridTemplateColumns: '450px 170px 150px 150px 150px 100px',
+    gridTemplateColumns: '400px 170px 150px 150px 150px 150px',
   },
   links: {
     color: 'black',
