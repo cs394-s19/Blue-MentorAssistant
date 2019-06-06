@@ -10,6 +10,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
 
 
+
 const classes = {
   titleDiv: {
     display: 'flex',
@@ -113,9 +114,16 @@ const TicketForm = ({ classes }) => {
       myJson["date"] = d.getTime();
       myJson["status"] = "Unread";
       let database = firebase.database();
-      database.ref('winter2019/' + exercise + '/tickets').push(myJson);
-      alert("Your ticket was successfully submitted.");
-      //window.location.href = "/newticket/";
+      let ref = database.ref('winter2019/' + exercise + '/tickets').push(myJson, 
+          (e) => {
+          if(e){
+            console.log('submit error');
+          }
+          else {
+            alert("Your ticket was successfully submitted.");
+            window.location.href = "/ticket/winter2019/" + exercise + "/" + ref.key + "/studentView/";
+          }
+        });
     }
   }
 
