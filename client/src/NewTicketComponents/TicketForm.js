@@ -112,7 +112,7 @@ const TicketForm = ({ classes }) => {
       console.log("myJson ====> ", myJson);
       let d = new Date();
       myJson["date"] = d.getTime();
-      myJson["status"] = "Unread";
+      myJson["status"] = "Needs Help";
       let database = firebase.database();
       let ref = database.ref('winter2019/' + exercise + '/tickets').push(myJson, 
           (e) => {
