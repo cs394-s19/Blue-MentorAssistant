@@ -1,9 +1,23 @@
 # Mentor Assistant
 
-## Starting the application
+## Starting The Application
 Clone the repository. From the root directory, `cd client` then  `npm install` then `npm start`. This will launch the application in the browser, on http://localhost:3000
 
-## File structure
+## Login NetIDs for Testing
+Currently, the NetIDs for the class is saved in the attached Firebase as a Roster dictionary. For testing, one may use the following login NetIDs:
+```
+3 student netIDs:
+aaa0000
+bbb0000
+student
+
+3 mentor netIDs:
+ccc0000
+ddd0000
+mentor
+```
+
+## File Structure
 The application is split into 2 parts, the student side and the mentor side.
 
 ## Student
